@@ -4,7 +4,7 @@
 <h1>Serviços</h1>
 <p class="row">
   <form class="inline" method="post" action="/admin/servicos/recarregar"><input type="hidden" name="csrf" value="{{ csrf }}"><button>Recarregar serviços no bot</button></form>
-  <span class="mute">Só serviços <b>approved</b> e sem erro de validação entram no bot.</span>
+  <span class="mute">Só serviços <b>approved</b> e sem erro de validaçêo entram no bot.</span>
 </p>
 {% if load_errors %}<div class="warn">Ignorados no carregamento:<br>{% for e in load_errors %}{{ e }}<br>{% endfor %}</div>{% endif %}
 {% for it in items %}
@@ -18,7 +18,7 @@
     <form class="inline" method="post" action="/admin/servicos/{{ it.file }}/aprovar"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="pri" {{ 'disabled' if it.errors }}>Aprovar</button></form>
     {% endif %}
   </div>
-  {% if it.errors %}<p class="bad">{% for e in it.errors %}• {{ e }}<br>{% endfor %}</p>{% else %}<p class="ok">validação ok</p>{% endif %}
+  {% if it.errors %}<p class="bad">{% for e in it.errors %}• {{ e }}<br>{% endfor %}</p>{% else %}<p class="ok">validaçêo ok</p>{% endif %}
   <details><summary class="mute">ver YAML</summary><pre>{{ it.yaml }}</pre></details>
 </div>
 {% else %}

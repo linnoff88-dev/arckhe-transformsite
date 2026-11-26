@@ -86,7 +86,7 @@ class Service(BaseModel):
     confirm: Confirm | None = None
     action: Action | None = None
     on_success: Outcome = Field(default_factory=Outcome)
-    on_failure: Outcome = Field(default_factory=lambda: Outcome(reply="Não consegui concluir agora. Vou passar para a equipe."))
+    on_failure: Outcome = Field(default_factory=lambda: Outcome(reply="Nêo consegui concluir agora. Vou passar para a equipe."))
     handoff: Handoff = Field(default_factory=Handoff)
     knowledge: dict[str, Any] = Field(default_factory=dict)
     source: dict[str, Any] = Field(default_factory=dict)  # de onde veio (conversor)
@@ -133,16 +133,16 @@ def lint_service(svc: Service, tools: dict | None = None) -> list[str]:
     refs = set(re.findall(r"\{([a-z_][\w]*)", yaml.safe_dump(svc.model_dump(by_alias=True), allow_unicode=True)))
     allowed = set(names) | {"session_id", "today", "result", "channel", "user_id"}
     for r in refs - allowed:
-        errs.append(f"template usa {{{r}}} que não é slot")
+        errs.append(f"template usa {{{r}}} que nêo é slot")
     if svc.action:
         spec = (tools or {}).get(svc.action.tool)
         if tools is not None and spec is None:
             errs.append(f"ferramenta desconhecida: {svc.action.tool}")
         side = spec.side_effects if spec else True
         if side and not svc.confirm:
-            errs.append("ação com efeito exige `confirm`")
+            errs.append("açêo com efeito exige `confirm`")
         if side and not svc.action.idempotency_key:
-            errs.append("ação com efeito exige `action.idempotency_key`")
+            errs.append("açêo com efeito exige `action.idempotency_key`")
     if any(s.sensitive for s in svc.slots) and svc.auth_method == "none":
         errs.append("slot sensível exige `auth` diferente de none")
     for s in svc.slots:

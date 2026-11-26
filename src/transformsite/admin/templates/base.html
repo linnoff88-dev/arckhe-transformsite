@@ -62,7 +62,7 @@ pre{background:#0b0d11;border:1px solid var(--line);border-radius:6px;padding:10
   {% endif %}
 </header>
 <main>
-{% if no_token %}<div class="warn">Sem token de painel ({{ token_env }} não definido ou com o valor de exemplo): acesso liberado só a partir de 127.0.0.1. Defina {{ token_env }} no .env antes de expor o servidor.</div>{% endif %}
+{% if no_token %}<div class="warn">Sem token de painel ({{ token_env }} nêo definido ou com o valor de exemplo): acesso liberado só a partir de 127.0.0.1. Defina {{ token_env }} no .env antes de expor o servidor.</div>{% endif %}
 {% if msg %}<div class="flash">{{ msg }}</div>{% endif %}
 {% block body %}{% endblock %}
 </main>

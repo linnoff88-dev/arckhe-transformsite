@@ -1,16 +1,16 @@
 """Canais WhatsApp.
 
-`EvolutionChannel` (Evolution API v2, self-hosted — padrão do projeto)
+`EvolutionChannel` (Evolution API v2, self-hosted — padrêo do projeto)
     Entrada: webhook `messages.upsert`. Saída: `POST {base_url}/message/sendText/{instance}` (header `apikey`).
-    Botões: a Evolution usa Baileys (WhatsApp Web não oficial); botões/listas interativos NÃO têm entrega
-    garantida (o WhatsApp descarta em muitas contas). Por isso o padrão é texto com opções numeradas
+    Botões: a Evolution usa Baileys (WhatsApp Web nêo oficial); botões/listas interativos NêO têm entrega
+    garantida (o WhatsApp descarta em muitas contas). Por isso o padrêo é texto com opções numeradas
     (caps buttons=0, lists=0). `use_lists: true` em `channels.whatsapp` liga `sendList` (≤10 itens),
     por sua conta e risco. A resposta numerada ("2") é entendida pelo motor.
 
 `CloudAPIChannel` (WhatsApp Cloud API oficial da Meta)
     Entrada: webhook `entry[].changes[].value.messages[]`. Saída: `POST {graph}/v20.0/{phone_number_id}/messages`.
     ≤3 opções → botões (título ≤20), ≤10 → lista (título ≤24), acima disso → texto numerado.
-    GET de verificação com `verify_token`; POST validado com `X-Hub-Signature-256` se houver app secret.
+    GET de verificaçêo com `verify_token`; POST validado com `X-Hub-Signature-256` se houver app secret.
 """
 
 from __future__ import annotations
@@ -140,7 +140,7 @@ class EvolutionChannel(_WABase):
                 if (m.get(k) or {}).get("caption"):
                     text = m[k]["caption"]
         if not text:
-            return None  # áudio/figurinha/reação: sem texto (transcrição de áudio fica para outra etapa)
+            return None  # áudio/figurinha/reaçêo: sem texto (transcriçêo de áudio fica para outra etapa)
         user = jid.split("@", 1)[0].split(":", 1)[0]
         meta: dict[str, Any] = {}
         if jid.endswith("@s.whatsapp.net") and _digits(user):
@@ -228,7 +228,7 @@ class CloudAPIChannel(_WABase):
             for ch in entry.get("changes") or []:
                 value = ch.get("value") or {}
                 names = {c.get("wa_id"): (c.get("profile") or {}).get("name") for c in value.get("contacts") or []}
-                for m in value.get("messages") or []:  # `statuses` (entregue/lido) são ignorados
+                for m in value.get("messages") or []:  # `statuses` (entregue/lido) sêo ignorados
                     msg = self._one(m, names)
                     if msg:
                         out.append(msg)
@@ -266,13 +266,13 @@ class CloudAPIChannel(_WABase):
         text, choices, mode = render_text(out, self.caps)
         base = {"messaging_product": "whatsapp", "recipient_type": "individual", "to": user_id}
         if mode == "buttons" and any(len(c["label"]) > 20 for c in choices):
-            mode = "list"  # rótulo não cabe no botão → lista (título 24 + descrição)
+            mode = "list"  # rótulo nêo cabe no botêo → lista (título 24 + descriçêo)
         payloads: list[dict] = []
         if mode in ("buttons", "list"):
             body = text
             if len(text) > 1024:  # limite do corpo interativo
                 payloads += [{**base, "type": "text", "text": {"body": t}} for t in split_text(text, MAX_TEXT)]
-                body = "Escolha uma opção:"
+                body = "Escolha uma opçêo:"
             if mode == "buttons":
                 action = {"buttons": [{"type": "reply", "reply": {"id": str(c["id"])[:256], "title": c["label"][:20]}} for c in choices]}
                 inter = {"type": "button", "body": {"text": body}, "action": action}
@@ -316,7 +316,7 @@ class CloudAPIChannel(_WABase):
 
     @property
     def _conf(self) -> dict:
-        # Cloud API pode ter seção própria (`channels.whatsapp_cloud`, se o config tiver) ou usar `channels.whatsapp`
+        # Cloud API pode ter seçêo própria (`channels.whatsapp_cloud`, se o config tiver) ou usar `channels.whatsapp`
         if self.cfg is None:
             return {}
         own = getattr(self.cfg.channels, "whatsapp_cloud", None)
@@ -325,7 +325,7 @@ class CloudAPIChannel(_WABase):
     def verify_signature(self, body: bytes, header: str | None) -> bool:
         secret = self._env("app_secret_env", "WHATSAPP_APP_SECRET", required=False)
         if not secret:
-            return True  # sem app secret configurado não há como validar
+            return True  # sem app secret configurado nêo há como validar
         expected = "sha256=" + hmac.new(secret.encode(), body, hashlib.sha256).hexdigest()
         return bool(header) and hmac.compare_digest(expected, header)
 

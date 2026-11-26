@@ -26,7 +26,7 @@ def _cfg(args):
 def cmd_init(args):
     dest = Path(args.dir)
     if dest.exists() and any(dest.iterdir()) and not args.force:
-        sys.exit(f"{dest} não está vazia (use --force)")
+        sys.exit(f"{dest} nêo está vazia (use --force)")
     tpl = resources.files("transformsite") / "scaffold" / args.template
     if not tpl.is_dir():
         sys.exit(f"template desconhecido: {args.template}")
@@ -253,7 +253,7 @@ def cmd_serve(args):
 def main(argv=None):
     p = argparse.ArgumentParser(prog="transformsite", description="Site + base de conhecimento → agente de chat com serviços.")
     p.add_argument("--version", action="version", version=f"transformsite {__version__}")
-    p.add_argument("-C", "--project", help="pasta do projeto (padrão: procura transformsite.yaml)")
+    p.add_argument("-C", "--project", help="pasta do projeto (padrêo: procura transformsite.yaml)")
     p.add_argument("--llm", help="sobrescreve llm.provider (ollama|openai_compat|claude_cli|codex_cli|fake)")
     sub = p.add_subparsers(dest="cmd", required=True)
 
@@ -303,7 +303,7 @@ def main(argv=None):
     s.add_argument("--scenarios")
     s.add_argument("--channels", help="cli,telegram,whatsapp,email,web")
     s.add_argument("--limit", type=int)
-    s.add_argument("--real-llm", action="store_true", help="cenários com o LLM configurado (padrão: fake determinístico)")
+    s.add_argument("--real-llm", action="store_true", help="cenários com o LLM configurado (padrêo: fake determinístico)")
     s.add_argument("--out")
     s.set_defaults(fn=cmd_eval)
 
@@ -315,7 +315,7 @@ def main(argv=None):
     s = sub.add_parser("serve", help="sobe web widget, painel e canais")
     s.add_argument("--host", default="0.0.0.0")
     s.add_argument("--port", type=int, default=8000)
-    s.add_argument("--channels", help="lista separada por vírgula (padrão: os configurados)")
+    s.add_argument("--channels", help="lista separada por vírgula (padrêo: os configurados)")
     s.set_defaults(fn=cmd_serve)
 
     s = sub.add_parser("report", help="métricas em JSON/CSV")
@@ -323,7 +323,7 @@ def main(argv=None):
     s.add_argument("--out")
     s.set_defaults(fn=cmd_report)
 
-    s = sub.add_parser("privacy", help="LGPD: esquecer usuário ou expurgar por retenção")
+    s = sub.add_parser("privacy", help="LGPD: esquecer usuário ou expurgar por retençêo")
     s.add_argument("action", choices=["forget", "purge"])
     s.add_argument("--user", help="canal:id (forget)")
     s.set_defaults(fn=cmd_privacy)

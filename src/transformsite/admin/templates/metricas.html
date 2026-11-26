@@ -10,10 +10,10 @@
 </p>
 <div class="grid">
   <div class="card"><div class="k">Conversas</div><div class="v">{{ r.conversas }}</div></div>
-  <div class="card"><div class="k">Resolução sem humano</div><div class="v">{{ r.taxa_resolucao|pct }}</div><div class="k">meta ≥ 70%</div></div>
+  <div class="card"><div class="k">Resoluçêo sem humano</div><div class="v">{{ r.taxa_resolucao|pct }}</div><div class="k">meta ≥ 70%</div></div>
   <div class="card"><div class="k">Taxa de handoff</div><div class="v">{{ r.taxa_handoff|pct }}</div><div class="k">meta ≤ 25%</div></div>
-  <div class="card"><div class="k">Respostas com citação</div><div class="v">{{ r.taxa_citacao|pct }}</div><div class="k">{{ r.respostas_com_citacao }}/{{ r.respostas }} · meta ≥ 85%</div></div>
-  <div class="card"><div class="k">"Não sei"</div><div class="v">{{ r.nao_sei }}</div></div>
+  <div class="card"><div class="k">Respostas com citaçêo</div><div class="v">{{ r.taxa_citacao|pct }}</div><div class="k">{{ r.respostas_com_citacao }}/{{ r.respostas }} · meta ≥ 85%</div></div>
+  <div class="card"><div class="k">"Nêo sei"</div><div class="v">{{ r.nao_sei }}</div></div>
   <div class="card"><div class="k">Tempo até concluir (mediana)</div><div class="v">{{ r.mediana_conclusao_s if r.mediana_conclusao_s is not none else '—' }}{% if r.mediana_conclusao_s is not none %} s{% endif %}</div></div>
   <div class="card"><div class="k">Latência p50 / p95</div><div class="v">{{ r.latencia_p50_ms if r.latencia_p50_ms is not none else '—' }} / {{ r.latencia_p95_ms if r.latencia_p95_ms is not none else '—' }} ms</div></div>
   <div class="card"><div class="k">Reportadas erradas</div><div class="v">{{ r.reportadas_erradas }}</div></div>
@@ -21,7 +21,7 @@
 
 <h2>Por dia</h2>
 <div class="wrap"><table>
-  <tr><th>Dia</th><th>Conversas</th><th style="width:18%"></th><th>Resolução</th><th>Handoff</th><th>Citação</th><th>Não sei</th><th>Serv. ini/concl/canc</th><th>Mediana concl.</th><th>p50/p95 ms</th><th>Erradas</th></tr>
+  <tr><th>Dia</th><th>Conversas</th><th style="width:18%"></th><th>Resoluçêo</th><th>Handoff</th><th>Citaçêo</th><th>Nêo sei</th><th>Serv. ini/concl/canc</th><th>Mediana concl.</th><th>p50/p95 ms</th><th>Erradas</th></tr>
   {% for d in res.por_dia %}
   <tr>
     <td>{{ d.dia }}</td><td>{{ d.conversas }}</td>

@@ -12,7 +12,7 @@ class InMsg:
     user_id: str
     text: str
     msg_id: str | None = None  # id do canal — usado para descartar entregas duplicadas
-    choice_id: str | None = None  # botão clicado
+    choice_id: str | None = None  # botêo clicado
     meta: dict[str, Any] = field(default_factory=dict)  # phone, email, name, lang
     attachments: list[dict] = field(default_factory=list)
 
@@ -38,7 +38,7 @@ class Capabilities:
 
 
 def render_text(out: OutMsg, caps: Capabilities, cite_style: str = "plain") -> tuple[str, list[dict], str]:
-    """Degradação por canal. Retorna (texto, choices_nativos, modo) com modo em buttons|list|numbered|none."""
+    """Degradaçêo por canal. Retorna (texto, choices_nativos, modo) com modo em buttons|list|numbered|none."""
     text = out.text
     if out.citations:
         refs = "\n".join(f"[{c['n']}] {c['url']}" for c in out.citations)

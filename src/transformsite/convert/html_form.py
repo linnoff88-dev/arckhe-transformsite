@@ -1,4 +1,4 @@
-"""Extração determinística de `<form>` HTML → campos brutos (`RawField`).
+"""Extraçêo determinística de `<form>` HTML → campos brutos (`RawField`).
 
 Nada de LLM aqui: só DOM. A inferência de tipo e a montagem do serviço ficam em `build.py`.
 """
@@ -151,7 +151,7 @@ def _parse_cond(expr: str) -> tuple[str, str, str] | None:
 
 
 def _condition(el: Tag) -> tuple[tuple[str, str, str] | None, bool]:
-    """(condição detectada, há_js_condicional_não_detectável)."""
+    """(condiçêo detectada, há_js_condicional_nêo_detectável)."""
     node: Tag | None = el
     while node is not None and node.name != "form":
         for a in COND_ATTRS:
@@ -186,7 +186,7 @@ def _is_honeypot(el: Tag) -> bool:
     return hidden and bool(re.search(r"honeypot|hp_|website|url|bot", name)) and not any(el.get(a) for a in COND_ATTRS)
 
 
-# ---------- extração ----------
+# ---------- extraçêo ----------
 def _base_field(soup, el: Tag, kind: str) -> RawField:
     label, src, star = _label_for(soup, el)
     f = RawField(name=el.get("name", ""), kind=kind, label=label, label_source=src)
@@ -198,7 +198,7 @@ def _base_field(soup, el: Tag, kind: str) -> RawField:
     cond, js = _condition(el)
     f.when = cond
     if js:
-        f.todos.append(f"campo '{f.name}': lógica condicional não detectada (JS) — revisar se precisa de `when`")
+        f.todos.append(f"campo '{f.name}': lógica condicional nêo detectada (JS) — revisar se precisa de `when`")
     return f
 
 
@@ -271,10 +271,10 @@ def extract_form(soup: BeautifulSoup, form: Tag, origin: str, base_url: str | No
         if kind in SKIP_INPUT_TYPES or not name:
             continue
         if kind == "password":
-            rf.todos.append(f"campo de senha '{name}' ignorado — não coletar senha por chat")
+            rf.todos.append(f"campo de senha '{name}' ignorado — nêo coletar senha por chat")
             continue
         if kind == "file":
-            rf.todos.append(f"anexo '{name}' ignorado — tipo `file` ainda não suportado")
+            rf.todos.append(f"anexo '{name}' ignorado — tipo `file` ainda nêo suportado")
             continue
         if _is_honeypot(el):
             continue
@@ -296,7 +296,7 @@ def extract_form(soup: BeautifulSoup, form: Tag, origin: str, base_url: str | No
                 continue
             f = _base_field(soup, el, "checkbox")
             f.options = [(el.get("value", "on"), f.label)]
-            f.todos.append(f"campo '{name}': checkbox vira sim/não — o legado receberá True/False em vez de '{_txt(el.get('value', 'on'))}'")
+            f.todos.append(f"campo '{name}': checkbox vira sim/nêo — o legado receberá True/False em vez de '{_txt(el.get('value', 'on'))}'")
             rf.fields.append(f)
             continue
         f = _base_field(soup, el, kind)
@@ -316,7 +316,7 @@ def extract_form(soup: BeautifulSoup, form: Tag, origin: str, base_url: str | No
                     continue
                 f.options.append((str(val).strip(), text or str(val)))
             if f.multiple:
-                f.todos.append(f"campo '{name}': seleção múltipla virou escolha única (enum) — revisar")
+                f.todos.append(f"campo '{name}': seleçêo múltipla virou escolha única (enum) — revisar")
         rf.fields.append(f)
     return rf
 

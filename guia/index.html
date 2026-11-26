@@ -127,7 +127,7 @@
     <div>
       <span class="chip">Framework aberto · LLM local · MIT</span>
       <h1>Seu site vira um <span class="amb">chat</span> que atende de verdade</h1>
-      <p class="lead">O transformsite lê o site inteiro e a sua base de conhecimento e coloca no lugar dos formulários um agente de conversa no WhatsApp, Telegram, e-mail ou widget. Ele responde citando a fonte, diz "não sei" quando não sabe e executa serviços como agendar, abrir chamado ou enviar ao sistema antigo.</p>
+      <p class="lead">O transformsite lê o site inteiro e a sua base de conhecimento e coloca no lugar dos formulários um agente de conversa no WhatsApp, Telegram, e-mail ou widget. Ele responde citando a fonte, diz "nêo sei" quando nêo sabe e executa serviços como agendar, abrir chamado ou enviar ao sistema antigo.</p>
       <div class="cta">
         <a class="btn" href="#guia">Começar o guia</a>
         <a class="btn ghost" href="https://github.com/inematds/transformsite" target="_blank" rel="noopener">Ver no GitHub</a>
@@ -140,12 +140,12 @@
 <section id="oque"><div class="wrap">
   <span class="chip">O que é</span>
   <h2>O site vira a fonte de verdade; a conversa vira o canal</h2>
-  <p class="sub">A ideia vem do America.gov (2026), que reuniu cerca de 29 mil sites do governo americano num único ponto de entrada conversacional. O transformsite é a versão aberta e simples dessa ideia para empresas, escolas e órgãos públicos.</p>
+  <p class="sub">A ideia vem do America.gov (2026), que reuniu cerca de 29 mil sites do governo americano num único ponto de entrada conversacional. O transformsite é a versêo aberta e simples dessa ideia para empresas, escolas e órgêos públicos.</p>
   <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="assets/banner-grade.jpg" alt="Os seis pilares do transformsite: respostas com fonte, serviços em YAML, WhatsApp e Telegram, formulário vira conversa, painel e handoff, LLM local" loading="lazy" style="width:100%;display:block"></figure>
   <div class="grid g3">
-    <div class="card"><h3>📚 Responde com fonte</h3><p>Todo o site, mais PDFs e documentos, vira um índice de busca híbrida (palavras + significado). Cada resposta traz o link da página usada. Sem fonte, o bot diz "não sei" e oferece passar para a equipe.</p></div>
-    <div class="card"><h3>🧩 Serviço = um arquivo YAML</h3><p>Agendar, fale conosco, segunda via… Você declara os dados a coletar, a confirmação e a ação. O motor conversa: aceita tudo numa frase, correção, dúvida no meio, cancelar e retomar dias depois.</p></div>
-    <div class="card"><h3>🔒 Local e com LGPD</h3><p>LLM no Ollama (ou Claude Code / Codex pela assinatura), índice num arquivo SQLite, dados pessoais mascarados nos logs, retenção configurável, código por e-mail antes de dado sensível.</p></div>
+    <div class="card"><h3>📚 Responde com fonte</h3><p>Todo o site, mais PDFs e documentos, vira um índice de busca híbrida (palavras + significado). Cada resposta traz o link da página usada. Sem fonte, o bot diz "nêo sei" e oferece passar para a equipe.</p></div>
+    <div class="card"><h3>🧩 Serviço = um arquivo YAML</h3><p>Agendar, fale conosco, segunda via… Você declara os dados a coletar, a confirmaçêo e a açêo. O motor conversa: aceita tudo numa frase, correçêo, dúvida no meio, cancelar e retomar dias depois.</p></div>
+    <div class="card"><h3>🔒 Local e com LGPD</h3><p>LLM no Ollama (ou Claude Code / Codex pela assinatura), índice num arquivo SQLite, dados pessoais mascarados nos logs, retençêo configurável, código por e-mail antes de dado sensível.</p></div>
   </div>
 </div></section>
 
@@ -165,14 +165,14 @@
   <div class="grid g3" style="margin-top:26px">
     <div class="card"><h3>F0–F1 · Conhecer e responder</h3><p><code>inventory</code> lista páginas e formulários. <code>ingest</code> lê o site (sitemap, links, robots.txt) e os documentos locais. O RAG responde só com trechos e cita a fonte.</p></div>
     <div class="card"><h3>F2–F3 · Serviços e canais</h3><p>Máquina de slots com tipos validados (CPF, e-mail, telefone, CEP, data e hora em português), agenda local, tickets. O mesmo motor atende Telegram, WhatsApp (Evolution ou Cloud API), e-mail e widget.</p></div>
-    <div class="card"><h3>F4–F6 · Legado, operação, deploy</h3><p><code>convert</code> transforma formulário HTML/PDF em serviço, que continua enviando ao sistema antigo. Painel para assumir conversas, aprovar serviços e ver métricas. Docker e VPS prontos.</p></div>
+    <div class="card"><h3>F4–F6 · Legado, operaçêo, deploy</h3><p><code>convert</code> transforma formulário HTML/PDF em serviço, que continua enviando ao sistema antigo. Painel para assumir conversas, aprovar serviços e ver métricas. Docker e VPS prontos.</p></div>
   </div>
 </div></section>
 
 <section id="pre"><div class="wrap">
   <span class="chip">Pré-requisitos</span>
   <h2>O que você precisa</h2>
-  <p class="sub">Python 3.11+ e um LLM. Com GPU, o padrão é um modelo local; sem GPU, use um modelo menor ou a sua assinatura.</p>
+  <p class="sub">Python 3.11+ e um LLM. Com GPU, o padrêo é um modelo local; sem GPU, use um modelo menor ou a sua assinatura.</p>
   <div class="grid g3">
     <div class="card"><h3>Python + transformsite</h3><p>Instala o CLI <code>transformsite</code>.</p><pre><span class="c"># pipx (recomendado)</span>
 <span class="k">pipx install</span> git+https://github.com/inematds/transformsite</pre></div>
@@ -191,7 +191,7 @@ llm:
 
   <div class="step"><div class="b">1</div><div>
     <h3>Crie o projeto</h3>
-    <p>Gera a configuração, dois serviços de exemplo (agendar e fale conosco), uma ferramenta de exemplo, os cenários de teste e um token aleatório para o painel.</p>
+    <p>Gera a configuraçêo, dois serviços de exemplo (agendar e fale conosco), uma ferramenta de exemplo, os cenários de teste e um token aleatório para o painel.</p>
 <pre><span class="k">transformsite init</span> meubot --org <span class="s">"Minha Empresa"</span> --url <span class="s">https://www.minhaempresa.com.br</span> --contact <span class="s">atendimento@minhaempresa.com.br</span>
 <span class="k">cd</span> meubot</pre>
   </div></div>
@@ -211,7 +211,7 @@ llm:
 
   <div class="step"><div class="b">4</div><div>
     <h3>Declare os serviços (Fase 2)</h3>
-    <p>Edite <code>services/*.yaml</code>: dados a coletar, confirmação, ação e resposta. Ferramentas próprias vão em <code>tools/*.py</code>. Valide antes de subir.</p>
+    <p>Edite <code>services/*.yaml</code>: dados a coletar, confirmaçêo, açêo e resposta. Ferramentas próprias vêo em <code>tools/*.py</code>. Valide antes de subir.</p>
 <pre><span class="c"># services/agendar.yaml (trecho)</span>
 slots:
   - {name: nome,  type: text,  prompt: <span class="s">"Qual é o seu nome?"</span>}
@@ -228,7 +228,7 @@ action: {tool: agenda.criar_evento, idempotency_key: <span class="s">"{session_i
     <h3>Meça antes de publicar</h3>
     <p>Rode as perguntas de teste e os roteiros de conversa. <code>golden</code> gera um rascunho de perguntas a partir da sua própria base para você revisar.</p>
 <pre><span class="k">transformsite golden</span> --n 50                <span class="c"># rascunho → revise → tests/golden.jsonl</span>
-<span class="k">transformsite eval</span> --golden tests/golden.jsonl   <span class="c"># citação válida, "não sei", injeção</span>
+<span class="k">transformsite eval</span> --golden tests/golden.jsonl   <span class="c"># citaçêo válida, "nêo sei", injeçêo</span>
 <span class="k">transformsite eval</span> --scenarios tests/cenarios --real-llm   <span class="c"># 13/13 no piloto</span></pre>
   </div></div>
 
@@ -253,10 +253,10 @@ action: {tool: agenda.criar_evento, idempotency_key: <span class="s">"{session_i
 <section id="exemplos"><div class="wrap">
   <span class="chip">Exemplos</span>
   <h2>Piloto: INEMA.CLUB</h2>
-  <p class="sub">O site inema.club (cursos, guias, eventos e base de conhecimento) foi o primeiro a virar chat. Resultado medido com 73 perguntas de teste e o LLM local: <strong>92,6%</strong> das respostas com fonte válida, <strong>100%</strong> de "não sei" nas perguntas fora do escopo, <strong>100%</strong> das tentativas de injeção bloqueadas e latência p95 de <strong>2,6 s</strong>.</p>
+  <p class="sub">O site inema.club (cursos, guias, eventos e base de conhecimento) foi o primeiro a virar chat. Resultado medido com 73 perguntas de teste e o LLM local: <strong>92,6%</strong> das respostas com fonte válida, <strong>100%</strong> de "nêo sei" nas perguntas fora do escopo, <strong>100%</strong> das tentativas de injeçêo bloqueadas e latência p95 de <strong>2,6 s</strong>.</p>
   <div class="ex">
     <figure><img src="assets/ex-chat.jpg" alt="Widget de chat respondendo sobre um curso do INEMA.CLUB com o link da fonte"><figcaption>Widget no site: a resposta vem com a página usada como fonte.</figcaption></figure>
-    <figure><img src="assets/ex-painel.jpg" alt="Painel administrativo do transformsite na tela de métricas"><figcaption>Painel /admin: métricas (resolução sem humano, handoff, citação, latência), além de conversas, fila, serviços e base.</figcaption></figure>
+    <figure><img src="assets/ex-painel.jpg" alt="Painel administrativo do transformsite na tela de métricas"><figcaption>Painel /admin: métricas (resoluçêo sem humano, handoff, citaçêo, latência), além de conversas, fila, serviços e base.</figcaption></figure>
   </div>
 </div></section>
 
@@ -267,7 +267,7 @@ action: {tool: agenda.criar_evento, idempotency_key: <span class="s">"{session_i
   <div class="phase"><div class="tag">v1 ✅</div><div class="d"><strong>Framework completo</strong><span>Inventário, base com fonte, serviços YAML, Telegram/WhatsApp/e-mail/web, conversor de formulários, painel, métricas, deploy em VPS.</span></div></div>
   <div class="phase"><div class="tag">v2</div><div class="d"><strong>Bot pronto em uma imagem</strong><span><code>transformsite bake</code>: depois de puxar toda a base e definir os serviços, gera uma imagem Docker com índice, serviços e manifesto de entrega. Um <code>docker run</code> e está no ar.</span></div></div>
   <div class="phase"><div class="tag">v3</div><div class="d"><strong>Transações e identidade</strong><span>Login do sistema legado e gov.br, anexos e OCR, PDF preenchido, áudio do WhatsApp com Whisper local.</span></div></div>
-  <div class="phase"><div class="tag">v4</div><div class="d"><strong>Escala e vários clientes</strong><span>Postgres + pgvector, filas, vLLM, vários bots por instalação, avaliação contínua a cada nova leitura do site.</span></div></div>
+  <div class="phase"><div class="tag">v4</div><div class="d"><strong>Escala e vários clientes</strong><span>Postgres + pgvector, filas, vLLM, vários bots por instalaçêo, avaliaçêo contínua a cada nova leitura do site.</span></div></div>
 </div></section>
 
 <footer>

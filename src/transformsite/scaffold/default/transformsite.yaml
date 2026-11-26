@@ -1,4 +1,4 @@
-# transformsite — configuração do projeto
+# transformsite — configuraçêo do projeto
 name: {{name}}
 org: "{{org}}"
 language: pt-BR
@@ -8,7 +8,7 @@ welcome: >-
 fallback_contact: "{{contact}}"
 
 llm:
-  # ollama (local, padrão) | openai_compat (vLLM/LM Studio) | claude_cli | codex_cli | fake
+  # ollama (local, padrêo) | openai_compat (vLLM/LM Studio) | claude_cli | codex_cli | fake
   provider: ollama
   model: qwen3.6:35b-a3b
   base_url: http://localhost:11434
@@ -23,13 +23,13 @@ kb:
   max_pages: 300
 
 agenda:
-  provider: local       # local (sem configuração) | calcom
+  provider: local       # local (sem configuraçêo) | calcom
   business_hours: "mon-fri 09:00-17:00"
   slot_minutes: 30
   min_lead_hours: 2
 
 handoff:
-  # para onde vão os pedidos de atendimento humano: panel | email:<endereço> | telegram:<chat_id>
+  # para onde vêo os pedidos de atendimento humano: panel | email:<endereço> | telegram:<chat_id>
   targets: [panel, "email:{{contact}}"]
   hours: "seg–sex, 9h–18h"
 
@@ -42,7 +42,7 @@ privacy:
   dpo_contact: "{{contact}}"
 
 email:
-  smtp_host: ""         # vazio = e-mails vão para data/outbox/*.eml (modo seguro)
+  smtp_host: ""         # vazio = e-mails vêo para data/outbox/*.eml (modo seguro)
   smtp_from: ""
 
 channels:

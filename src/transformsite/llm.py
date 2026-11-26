@@ -1,10 +1,10 @@
 """Provedores de LLM e embeddings.
 
-Padrão: Ollama local (nada sai da máquina). Alternativas sem API key:
+Padrêo: Ollama local (nada sai da máquina). Alternativas sem API key:
 - `openai_compat`: qualquer servidor local compatível com OpenAI (vLLM, LM Studio, llama.cpp).
 - `claude_cli`: usa o Claude Code instalado e logado (`claude -p`) — pela assinatura.
 - `codex_cli`: usa o Codex CLI instalado e logado (`codex exec`) — pela assinatura.
-- `fake`: determinístico, para testes e demonstração offline.
+- `fake`: determinístico, para testes e demonstraçêo offline.
 """
 
 from __future__ import annotations
@@ -101,7 +101,7 @@ class LLM:
         return r.json()["message"]["content"]
 
     def _post_retry(self, url: str, body: dict, label: str, attempts: int = 4) -> httpx.Response:
-        """POST com nova tentativa em erro 5xx/conexão (ex.: Ollama recarregando o modelo)."""
+        """POST com nova tentativa em erro 5xx/conexêo (ex.: Ollama recarregando o modelo)."""
         import time
 
         last: Exception | None = None
@@ -147,7 +147,7 @@ class LLM:
                     raise LLMError(f"codex exec falhou: {r.stderr[-300:]}")
                 return out.read_text(encoding="utf-8") if out.exists() else r.stdout
         except FileNotFoundError as e:
-            raise LLMError(f"CLI não encontrado: {e}") from e
+            raise LLMError(f"CLI nêo encontrado: {e}") from e
         except subprocess.TimeoutExpired as e:
             raise LLMError("timeout no CLI") from e
 
@@ -192,7 +192,7 @@ def _hash_embed(text: str, dim: int = 256) -> list[float]:
 def _fake_default(messages: list[dict], json_mode: bool) -> str:
     """LLM falso: suficiente para os fluxos rodarem sem modelo.
 
-    - Pedido de resposta RAG: cita o trecho [1] se existir, senão "não sei".
+    - Pedido de resposta RAG: cita o trecho [1] se existir, senêo "nêo sei".
     - Demais pedidos JSON: objeto vazio (o motor cai nas regras determinísticas).
     """
     sys = messages[0]["content"] if messages else ""

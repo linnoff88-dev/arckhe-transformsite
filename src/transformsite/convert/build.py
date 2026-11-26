@@ -1,7 +1,7 @@
 """Campos brutos (`RawForm`) → dict `service/1` + YAML comentado.
 
 Regras: tipo semântico por tipo HTML e por nome/rótulo; `review: pending` SEMPRE;
-`confidence` por slot; ação `http.post_form` (HTML) com os NOMES ORIGINAIS dos campos,
+`confidence` por slot; açêo `http.post_form` (HTML) com os NOMES ORIGINAIS dos campos,
 ou `email.enviar` (PDF).
 """
 
@@ -88,7 +88,7 @@ def make_prompt(label: str, type_: str, group: str | None = None) -> str:
     lab = (label or "este dado").rstrip("?: ")
     ctx = f" ({group})" if group and norm(group) not in norm(lab) else ""
     if type_ == "yes_no":
-        return f"{lab}{ctx}? (sim/não)"
+        return f"{lab}{ctx}? (sim/nêo)"
     if type_ == "enum":
         return f"Escolha: {lab}{ctx}"
     return f"Por favor, informe: {lab}{ctx}"
@@ -107,13 +107,13 @@ def intent_examples(title: str, slots: list[dict]) -> list[str]:
         "agend": ["quero agendar", "marcar um horário"],
         "matricul": ["quero me matricular", "fazer matrícula"],
         "boleto": ["segunda via do boleto", "perdi meu boleto"],
-        "ouvidoria": ["quero fazer uma reclamação", "registrar manifestação"],
-        "inscri": ["quero me inscrever", "fazer inscrição"],
+        "ouvidoria": ["quero fazer uma reclamaçêo", "registrar manifestaçêo"],
+        "inscri": ["quero me inscrever", "fazer inscriçêo"],
         "orcamento": ["quero um orçamento", "quanto custa"],
         "cadastr": ["quero me cadastrar", "fazer cadastro"],
         "cancel": ["quero cancelar", "cancelar meu contrato"],
         "reembolso": ["quero pedir reembolso", "reembolso de despesa"],
-        "bolsa": ["quero uma bolsa", "inscrição na bolsa"],
+        "bolsa": ["quero uma bolsa", "inscriçêo na bolsa"],
         "visita": ["agendar visita técnica", "marcar uma visita"],
     }
     for k, vs in verbs.items():
@@ -198,7 +198,7 @@ def build_slots(rf: RawForm) -> tuple[list[dict], dict[str, str], list[str], dic
             if target and re.fullmatch(r"\S+", val):
                 s["when"] = f"{{{target}}} {op} {val}"
             else:
-                todos.append(f"campo '{f.name}': condição '{ref} {op} {val}' não mapeada — revisar `when`")
+                todos.append(f"campo '{f.name}': condiçêo '{ref} {op} {val}' nêo mapeada — revisar `when`")
         if t == "email":
             s["prefill_from"] = "channel.user_email"
         elif t == "phone_br":
@@ -208,7 +208,7 @@ def build_slots(rf: RawForm) -> tuple[list[dict], dict[str, str], list[str], dic
         s["confidence"] = confidence(f, rf.kind)
         slots.append(s)
     if not slots:
-        todos.append("nenhum campo extraído — descrever os slots à mão")
+        todos.append("nenhum campo extraído — descrever os slots à mêo")
     return slots, name_map, todos, labels
 
 
@@ -292,7 +292,7 @@ LLM_SYS = (
     "TAREFA: REFINAR_SERVICO. Você recebe os campos de um formulário legado brasileiro. "
     "Responda JSON: {\"slots\": {\"<nome>\": {\"prompt\": \"pergunta amigável em PT-BR\", \"type\": \"<tipo>\"}}, "
     "\"examples\": [\"3 a 5 frases de usuário pedindo esse serviço\"]}. "
-    f"Tipos válidos: {', '.join(sorted(SLOT_TYPES))}. Não invente campos."
+    f"Tipos válidos: {', '.join(sorted(SLOT_TYPES))}. Nêo invente campos."
 )
 
 
@@ -308,7 +308,7 @@ def refine_with_llm(svc: dict, cfg) -> list[str]:
             {"role": "user", "content": f"Formulário: {svc['intent']['description']}\nCampos: {payload}"},
         ])
     except (LLMError, ValueError, KeyError) as e:
-        return [f"refino por LLM falhou ({e}) — mantida a extração determinística"]
+        return [f"refino por LLM falhou ({e}) — mantida a extraçêo determinística"]
     if not isinstance(out, dict):
         return notes
     sug = out.get("slots") or {}

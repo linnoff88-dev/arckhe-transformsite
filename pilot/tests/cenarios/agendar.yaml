@@ -24,7 +24,7 @@
     - {user: "maria@exemplo.com", expect: ["assunto"]}
     - {user: "1", expect: ["horarios"]}
     - {user: "2", expect: ["Confirmo", "12:30"]}
-    - {user: "não, o e-mail é maria.souza@exemplo.com", expect: ["Corrigido", "email", "Confirmo", "maria.souza@exemplo.com"]}
+    - {user: "nêo, o e-mail é maria.souza@exemplo.com", expect: ["Corrigido", "email", "Confirmo", "maria.souza@exemplo.com"]}
     - {user: "sim", expect: ["Agendado", "maria.souza@exemplo.com"]}
   asserts: {appointments: 1}
 
@@ -60,8 +60,8 @@
     - {user: "Maria Souza", expect: ["e-mail"]}
     - {user: "maria@exemplo.com", expect: ["assunto"]}
     - {user: "1", expect: ["horarios"]}
-    - {user: "domingo às 15h", expect: ["não dá", "fora dos dias", "horarios livres"]}
-    - {user: "sexta às 20h", expect: ["não dá", "fora do horario"]}
+    - {user: "domingo às 15h", expect: ["nêo dá", "fora dos dias", "horarios livres"]}
+    - {user: "sexta às 20h", expect: ["nêo dá", "fora do horario"]}
     - {user: "2", expect: ["Confirmo"]}
     - {user: "sim", expect: ["Agendado"]}
   asserts: {appointments: 1}
@@ -80,9 +80,9 @@
 
 - name: fale_conosco
   steps:
-    - {user: "quero fazer uma reclamação", expect: ["nome"]}
+    - {user: "quero fazer uma reclamaçêo", expect: ["nome"]}
     - {user: "Carlos Dias", expect: ["e-mail"]}
-    - {user: "carlos@exemplo.com", expect: ["mensagem"], expect_not: ["dúvida, reclamação ou sugestão"]}
+    - {user: "carlos@exemplo.com", expect: ["mensagem"], expect_not: ["dúvida, reclamaçêo ou sugestêo"]}
     - {user: "O link do curso está quebrado.", expect: ["Confirma", "O link do curso"]}
     - {user: "sim", expect: ["Ticket"]}
   asserts: {tickets: 1, outbox: 1}
@@ -94,20 +94,20 @@
 
 - name: aviso_dado_sensivel
   steps:
-    - {user: "meu cpf é 529.982.247-25, tenho acesso?", expect: ["não envie CPF"]}
+    - {user: "meu cpf é 529.982.247-25, tenho acesso?", expect: ["nêo envie CPF"]}
   asserts: {events: {pii_warning: 1}}
 
 - name: sugerir_curso
   steps:
     - {user: "quero sugerir um curso", expect: ["tema"]}
-    - {user: "Automação de planilhas com agentes", expect: ["nível"]}
+    - {user: "Automaçêo de planilhas com agentes", expect: ["nível"]}
     - {user: "iniciante", expect: ["e-mail"]}
-    - {user: "pular", expect: ["Confirma", "Automação de planilhas"]}
-    - {user: "sim", expect: ["Sugestão registrada"]}
+    - {user: "pular", expect: ["Confirma", "Automaçêo de planilhas"]}
+    - {user: "sim", expect: ["Sugestêo registrada"]}
   asserts: {tickets: 1}
 
 - name: agendar_horario_de_carona_invalido
   steps:
     - {user: "quero agendar", expect: ["nome"]}
-    - {user: "sou o Pedro Alves, pedro@exemplo.com, domingo às 10h", expect: ["não dá", "fora dos dias"], expect_not: ["Confirmo"]}
+    - {user: "sou o Pedro Alves, pedro@exemplo.com, domingo às 10h", expect: ["nêo dá", "fora dos dias"], expect_not: ["Confirmo"]}
   asserts: {appointments: 0}

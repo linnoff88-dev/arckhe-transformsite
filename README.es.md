@@ -90,7 +90,7 @@ action:
 on_success: {reply: "Agendado! Protocolo {result.id}."}
 ```
 
-El cliente puede responder todo de una vez ("sou a Ana, ana@x.com, quinta às 10"), corregir ("não, o e-mail
+El cliente puede responder todo de una vez ("sou a Ana, ana@x.com, quinta às 10"), corregir ("nêo, o e-mail
 é…"), preguntar algo a mitad de camino (el bot responde con fuente y vuelve al trámite), cancelar o volver días después.
 
 Herramientas propias: crea `tools/minha.py` con `register(registry)` — mira `tools/exemplo.py`.

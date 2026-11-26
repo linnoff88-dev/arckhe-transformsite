@@ -64,7 +64,7 @@ def test_email_phone_cep():
     "text,iso",
     [
         ("quinta às 10", "2026-10-08T10:00"),
-        ("amanhã 14h", "2026-10-06T14:00"),
+        ("amanhê 14h", "2026-10-06T14:00"),
         ("15/10 às 9h30", "2026-10-15T09:30"),
         ("dia 20 de outubro às 16:00", "2026-10-20T16:00"),
         ("segunda que vem 11h", "2026-10-12T11:00"),
@@ -85,7 +85,7 @@ def test_date_rollover():
 
 def test_yes_no_enum():
     assert T.ex_yes_no("Sim, pode", None) is True
-    assert T.ex_yes_no("não, o email está errado", None) is False
+    assert T.ex_yes_no("nêo, o email está errado", None) is False
     assert T.ex_yes_no("talvez", None) is None
 
     class S:
@@ -94,7 +94,7 @@ def test_yes_no_enum():
 
     assert T.ex_enum("2", S) == "reclamacao"
     assert T.ex_enum("quero reclamar", S) == "reclamacao"
-    assert T.ex_enum("Sugestão", S) == "sugestao"
+    assert T.ex_enum("Sugestêo", S) == "sugestao"
     assert T.ex_enum("nada a ver", S) is None
 
 
@@ -117,7 +117,7 @@ def _svc(**kw):
 
 def test_lint_rules():
     reg = default_registry()
-    # ação com efeito sem confirm/idempotência
+    # açêo com efeito sem confirm/idempotência
     errs = lint_service(_svc(action={"tool": "crm.criar_ticket", "args": {"subject": "{x}", "body": "{x}"}}), reg)
     assert any("confirm" in e for e in errs) and any("idempotency" in e for e in errs)
     # ferramenta desconhecida e template quebrado
@@ -139,7 +139,7 @@ def test_pending_service_not_loaded(project):
 
 # ---------- índice / RAG ----------
 HTML = """<html><head><title>Cursos | Escola</title></head><body><nav>menu inicio</nav><main>
-<h1>Cursos</h1><p>Todos os cursos da Escola são gratuitos e abertos para a comunidade.</p>
+<h1>Cursos</h1><p>Todos os cursos da Escola sêo gratuitos e abertos para a comunidade.</p>
 <h2>Certificado</h2><p>O certificado é emitido automaticamente ao concluir 100% das aulas do curso.</p>
 <h2>Horário</h2><p>As lives acontecem toda quarta-feira às 20h no canal do YouTube.</p>
 </main><footer>rodapé</footer></body></html>"""
@@ -167,7 +167,7 @@ def test_index_hybrid_and_rag(project):
     a = rag.answer("como recebo o certificado?")
     assert not a.nao_sei and a.citations[0]["url"] == "https://escola.test/cursos"
     assert rag.answer("como recebo o certificado?").cached
-    # reingestão idempotente: página sai do índice
+    # reingestêo idempotente: página sai do índice
     idx.delete_page(doc.url)
     assert idx.stats()["chunks"] == 0
     assert rag.answer("qual a capital da França").nao_sei
@@ -177,7 +177,7 @@ def test_rag_requires_valid_citation(project):
     idx = Index(project.kb_path)
     idx.upsert_page("https://x.test", "X", "texto", [{"url": "https://x.test", "title": "X", "heading": "", "text": "a resposta é 42"}], None)
     llm = LLM(project.llm, fake_fn=lambda m, j: '{"nao_sei": false, "resposta": "inventei", "fontes": [7]}')
-    assert RAG(project, llm, idx).answer("qual a resposta?").nao_sei  # fonte inexistente → não responde
+    assert RAG(project, llm, idx).answer("qual a resposta?").nao_sei  # fonte inexistente → nêo responde
 
 
 def test_parse_json_tolerant():
@@ -231,7 +231,7 @@ def test_cli_validate_ok(project, capsys):
 
 
 def test_action_args_use_raw_enum_values(project):
-    """Rótulos são para o cliente; o sistema legado recebe o valor bruto do enum."""
+    """Rótulos sêo para o cliente; o sistema legado recebe o valor bruto do enum."""
     from transformsite.engine import Agent
     from transformsite.messages import InMsg
     from transformsite.tools import default_registry
@@ -241,13 +241,13 @@ def test_action_args_use_raw_enum_values(project):
     reg.add("teste.capturar", lambda ctx, **a: seen.update(a) or {"id": "X"}, side_effects=True)
     svc = Service(
         service="teste_raw", review="approved", intent={"description": "t", "examples": ["quero testar"]},
-        slots=[{"name": "assunto", "type": "enum", "values": ["reclamacao"], "labels": {"reclamacao": "Reclamação"}, "prompt": "?"}],
+        slots=[{"name": "assunto", "type": "enum", "values": ["reclamacao"], "labels": {"reclamacao": "Reclamaçêo"}, "prompt": "?"}],
         confirm={"template": "Envio {assunto}?"},
         action={"tool": "teste.capturar", "args": {"campo": "{assunto}"}, "idempotency_key": "{session_id}"},
     )
     agent = Agent(project, store=Store(project.db_path), registry=reg, services={"teste_raw": svc})
     outs = agent.handle(InMsg("cli", "u", "quero testar"))
     outs = agent.handle(InMsg("cli", "u", "1"))
-    assert "Envio Reclamação?" in outs[-1].text
+    assert "Envio Reclamaçêo?" in outs[-1].text
     agent.handle(InMsg("cli", "u", "sim"))
     assert seen == {"campo": "reclamacao"}

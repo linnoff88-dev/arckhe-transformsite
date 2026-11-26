@@ -1,7 +1,7 @@
 """Servidor HTTP: /health, webhooks/rotas dos canais e painel admin (/admin).
 
-Concorrência: webhooks chegam em threads do pool do FastAPI. O `Agent` compartilha uma conexão
-SQLite e estado de sessão em memória, então todas as chamadas que mexem em conversa
+Concorrência: webhooks chegam em threads do pool do FastAPI. O `Agent` compartilha uma conexêo
+SQLite e estado de sessêo em memória, entêo todas as chamadas que mexem em conversa
 (`handle`, `takeover`, `release`, `human_reply`) passam por UM lock global (`agent_lock`).
 É simples e suficiente para o volume de um atendimento; o custo é serializar turnos de
 usuários diferentes (um turno lento de LLM atrasa os demais).
@@ -47,7 +47,7 @@ def lock_agent(agent) -> threading.RLock:
 
 
 def configured_channels(cfg: ProjectConfig) -> list[str]:
-    """Canais ativos pela configuração (+ segredos presentes no ambiente)."""
+    """Canais ativos pela configuraçêo (+ segredos presentes no ambiente)."""
     ch = cfg.channels
     names: list[str] = []
     if ch.web.get("enabled"):
@@ -76,7 +76,7 @@ def _load_channels(cfg: ProjectConfig, channels: list | None) -> tuple[list, dic
             continue
         try:
             out.append(get_channel(c, cfg))
-        except Exception as e:  # canal não implementado/mal configurado não derruba o servidor
+        except Exception as e:  # canal nêo implementado/mal configurado nêo derruba o servidor
             errors[c] = f"{type(e).__name__}: {e}"[:200]
             log.warning("canal %s indisponível: %s", c, e)
     return out, errors
@@ -164,6 +164,6 @@ def serve(cfg: ProjectConfig, host: str = "0.0.0.0", port: int = 8000, channels:
     from .admin import admin_token
 
     if not admin_token(cfg):
-        print(f"  [aviso] {cfg.admin_token_env} não definido (ou valor de exemplo): painel /admin só aceita acesso de 127.0.0.1")
+        print(f"  [aviso] {cfg.admin_token_env} nêo definido (ou valor de exemplo): painel /admin só aceita acesso de 127.0.0.1")
     print(f"  painel: http://{'127.0.0.1' if host in ('0.0.0.0', '::') else host}:{port}/admin")
     uvicorn.run(app, host=host, port=port, log_level="info")

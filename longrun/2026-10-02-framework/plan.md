@@ -1,4 +1,4 @@
-# Plano (reescrever, não acumular)
+# Plano (reescrever, nêo acumular)
 
 ## Estratégia atual
 <2–4 linhas>

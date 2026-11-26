@@ -1,4 +1,4 @@
-"""Envio de e-mail: SMTP se configurado; senão grava .eml em data/outbox (modo seguro/offline)."""
+"""Envio de e-mail: SMTP se configurado; senêo grava .eml em data/outbox (modo seguro/offline)."""
 
 from __future__ import annotations
 

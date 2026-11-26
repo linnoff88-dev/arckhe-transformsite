@@ -68,7 +68,7 @@ def test_serve_recusa_convertidos(tmp_path):
         convert_file(src, tmp_path, use_llm=False)
     tools = default_registry()
     approved, errors = load_services(tmp_path, only_approved=True, tools=tools)
-    assert errors == []  # recusa é por review: pending, não por YAML quebrado
+    assert errors == []  # recusa é por review: pending, nêo por YAML quebrado
     assert approved == {}
     todos, errors = load_services(tmp_path, only_approved=False, tools=tools)
     assert errors == [] and len(todos) == len(FORMS)
@@ -115,7 +115,7 @@ def test_hidden_literal_e_csrf(tmp_path):
     assert "csrf_token" not in fields and "website" not in fields  # token dinâmico e honeypot fora
     assert any("csrf_token" in t for t in svc.source["todos"])
     assert svc.slot("assunto").values == ["duvida", "elogio", "reclamacao", "trabalhe"]
-    assert svc.slot("assunto").labels["reclamacao"] == "Reclamação"
+    assert svc.slot("assunto").labels["reclamacao"] == "Reclamaçêo"
     assert svc.slot("nome").max_len == 120
 
 
@@ -126,7 +126,7 @@ def test_condicional_e_todo_js(tmp_path):
     assert svc.slot("cep_novo").when == "{motivo} == mudanca"
     assert svc.slot("aceita_oferta").when is None
     text = Path(res["path"]).read_text(encoding="utf-8")
-    assert "# TODO: campo 'aceita_oferta': lógica condicional não detectada" in text
+    assert "# TODO: campo 'aceita_oferta': lógica condicional nêo detectada" in text
     svc2 = load_service(Path(convert_file(FIX / "ouvidoria.html", tmp_path, use_llm=False)["path"]))
     assert svc2.slot("nome").when == "{identificar} == sim"
     assert svc2.slot("tipo").type == "enum" and svc2.slot("tipo").values == ["reclamacao", "denuncia", "sugestao", "elogio"]
@@ -144,7 +144,7 @@ def test_pdf_acroform(tmp_path):
     assert svc.slot("cpf").type == "cpf" and svc.slot("cpf").max_len is None
     assert any("PDF preenchido" in t for t in svc.source["todos"])
     reemb = load_service(Path(convert_file(FIX / "pdf_reembolso.pdf", tmp_path, use_llm=False)["path"]))
-    assert reemb.slot("tipo_despesa").labels == {"transp": "Transporte", "alim": "Alimentação", "hosp": "Hospedagem", "outros": "Outros"}
+    assert reemb.slot("tipo_despesa").labels == {"transp": "Transporte", "alim": "Alimentaçêo", "hosp": "Hospedagem", "outros": "Outros"}
     assert reemb.slot("matricula_funcional").max_len == 8  # Text2 → nome pelo /TU
 
 
@@ -208,7 +208,7 @@ def test_refino_llm_aplica_so_tipo_valido(tmp_path, monkeypatch):
     resposta = {
         "slots": {
             "cidade_onde_mora": {"prompt": "Em qual cidade você mora?", "type": "tipo_inventado"},
-            "pretensao_salarial": {"prompt": "Qual sua pretensão salarial?", "type": "number"},
+            "pretensao_salarial": {"prompt": "Qual sua pretensêo salarial?", "type": "number"},
             "fale_um_pouco_sobre": {"type": "email"},
         },
         "examples": ["quero trabalhar aí", "tem vaga?", "enviar currículo"],
@@ -228,7 +228,7 @@ def test_refino_llm_aplica_so_tipo_valido(tmp_path, monkeypatch):
 
 def test_sem_cfg_nao_chama_llm(tmp_path, monkeypatch):
     def boom(*a, **k):
-        raise AssertionError("LLM não deveria ser chamado")
+        raise AssertionError("LLM nêo deveria ser chamado")
 
     monkeypatch.setattr("transformsite.convert.refine_with_llm", boom)
     convert_file(FIX / "contato.html", tmp_path, cfg=None, use_llm=True)
@@ -260,7 +260,7 @@ def test_nomes_de_slot():
     assert snake("E-mail*") == "email"
     assert snake("1º campo")[0].isalpha()
     forms, _ = extract_html(
-        '<form action="http://x/y" method=post><input name="session_id" placeholder="Sessão">'
+        '<form action="http://x/y" method=post><input name="session_id" placeholder="Sessêo">'
         '<input name="Nome" placeholder="Nome"><input name="nome" placeholder="Nome de novo"></form>', origin="x")
     svc = build_service(forms[0], "t")
     names = [s["name"] for s in svc["slots"]]

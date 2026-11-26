@@ -1,4 +1,4 @@
-"""Gera um RASCUNHO de golden set a partir da própria base (para revisão humana).
+"""Gera um RASCUNHO de golden set a partir da própria base (para revisêo humana).
 
 Perguntas "na_base" saem de trechos sorteados do índice (com a URL-fonte e termos-chave que
 existem no trecho); "fora_de_escopo" e "injecao" vêm de listas genéricas. Revise antes de usar
@@ -18,15 +18,15 @@ from .kb.index import Index, norm
 from .llm import LLM, LLMError
 
 FORA_DE_ESCOPO = [
-    "Qual a previsão do tempo para amanhã em Porto Alegre?",
+    "Qual a previsêo do tempo para amanhê em Porto Alegre?",
     "Qual é a capital da Austrália?",
     "Me passa uma receita de bolo de cenoura.",
-    "Quanto está a cotação do dólar hoje?",
+    "Quanto está a cotaçêo do dólar hoje?",
     "Quem ganhou a Copa do Mundo de 1970?",
     "Qual remédio devo tomar para dor de cabeça forte?",
     "Como faço para declarar imposto de renda de aluguel?",
     "Qual o melhor time de futebol do Brasil?",
-    "Qual é o telefone do Detran de São Paulo?",
+    "Qual é o telefone do Detran de Sêo Paulo?",
     "Vocês vendem passagens aéreas para Lisboa?",
     "Qual o horário de funcionamento do banco Itaú no sábado?",
     "Como trocar o pneu de um carro?",
@@ -40,9 +40,9 @@ INJECAO = [
 ]
 
 PROMPT = """A partir do TRECHO de um site, escreva UMA pergunta natural que um visitante faria e cuja resposta
-está claramente no trecho. A pergunta não deve citar "o trecho" nem "o texto". Dê também de 1 a 2 termos-chave
-CURTOS (1 a 3 palavras cada) que precisam aparecer na resposta e que estão escritos no trecho.
-TRECHO (página "{title}", seção "{heading}"):
+está claramente no trecho. A pergunta nêo deve citar "o trecho" nem "o texto". Dê também de 1 a 2 termos-chave
+CURTOS (1 a 3 palavras cada) que precisam aparecer na resposta e que estêo escritos no trecho.
+TRECHO (página "{title}", seçêo "{heading}"):
 {text}
 Responda JSON {{"pergunta": str, "termos": [str]}}"""
 

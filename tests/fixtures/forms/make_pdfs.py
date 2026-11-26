@@ -1,7 +1,7 @@
 """Gera os PDFs de teste do conversor (Fase 4) só com `pypdf` (sem reportlab).
 
 - `pdf_inscricao_bolsa.pdf`  — AcroForm: texto, combo, checkbox, radio, /TU, required.
-- `pdf_reembolso.pdf`        — AcroForm: texto (com /MaxLen), list box com pares [export, exibição], checkbox.
+- `pdf_reembolso.pdf`        — AcroForm: texto (com /MaxLen), list box com pares [export, exibiçêo], checkbox.
 - `pdf_chapado_visita.pdf`   — PDF "chapado" (sem AcroForm): linhas "Nome: ______".
 
 Uso: `.venv/bin/python tests/fixtures/forms/make_pdfs.py` (reescreve os .pdf ao lado deste script).
@@ -186,27 +186,27 @@ class Doc:
 
 def make_bolsa() -> None:
     d = Doc()
-    d.text("Ficha de Inscrição - Programa de Bolsas 2027", size=16)
+    d.text("Ficha de Inscriçêo - Programa de Bolsas 2027", size=16)
     d.field_text("Nome completo:", "nome_completo", "Nome completo do candidato", required=True)
     d.field_text("CPF:", "cpf", "CPF do candidato (somente números)", required=True, maxlen=14)
     d.field_text("Data de nascimento:", "data_nasc", "Data de nascimento", required=True)
     d.field_text("E-mail:", "email", "E-mail para contato", required=True)
     d.field_text("Celular:", "celular", "Celular com DDD", required=False)
     d.field_choice("Curso pretendido:", "curso", "Curso pretendido",
-                   ["Administração", "Direito", "Enfermagem", "Engenharia Civil"], combo=True, required=True)
-    d.field_radio("Turno:", "turno", "Turno preferido", [("manha", "Manhã"), ("noite", "Noite")], required=True)
+                   ["Administraçêo", "Direito", "Enfermagem", "Engenharia Civil"], combo=True, required=True)
+    d.field_radio("Turno:", "turno", "Turno preferido", [("manha", "Manhê"), ("noite", "Noite")], required=True)
     d.field_text("Renda familiar mensal (R$):", "renda_familiar", "Renda familiar mensal em reais", required=True)
-    d.field_checkbox("Declaro que as informações são verdadeiras", "declaracao", "Declaro que as informações são verdadeiras", required=True)
+    d.field_checkbox("Declaro que as informações sêo verdadeiras", "declaracao", "Declaro que as informações sêo verdadeiras", required=True)
     d.save(HERE / "pdf_inscricao_bolsa.pdf")
 
 
 def make_reembolso() -> None:
     d = Doc()
-    d.text("Solicitação de Reembolso de Despesas", size=16)
+    d.text("Solicitaçêo de Reembolso de Despesas", size=16)
     d.field_text("Nome do colaborador:", "Text1", "Nome do colaborador", required=True)
     d.field_text("Matrícula:", "Text2", "Matrícula funcional", required=True, maxlen=8)
     d.field_choice("Tipo de despesa:", "tipo_despesa", "Tipo de despesa",
-                   [("transp", "Transporte"), ("alim", "Alimentação"), ("hosp", "Hospedagem"), ("outros", "Outros")],
+                   [("transp", "Transporte"), ("alim", "Alimentaçêo"), ("hosp", "Hospedagem"), ("outros", "Outros")],
                    combo=False, required=True)
     d.field_text("Valor total (R$):", "valor_total", "Valor total da despesa", required=True)
     d.field_text("Data da despesa:", "data_despesa", "Data da despesa", required=True)

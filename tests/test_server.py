@@ -103,7 +103,7 @@ def test_login(env):
     assert r.status_code == 303 and r.headers["location"] == "/admin/login"
     assert c.get("/admin/conversas", headers={"Authorization": "Bearer errado"}).status_code == 401
     assert c.post("/admin/login", data={"token": "errado"}).status_code == 401
-    assert c.get("/admin/conversas", follow_redirects=False).status_code == 303  # login falho não abre sessão
+    assert c.get("/admin/conversas", follow_redirects=False).status_code == 303  # login falho nêo abre sessêo
     assert c.get("/admin/conversas", headers={"Authorization": f"Bearer {TOKEN}"}).status_code == 200
     login(c)
     assert c.get("/admin/conversas").status_code == 200
@@ -140,10 +140,10 @@ def test_sem_token_so_local(proj, monkeypatch):
     app = create_app(proj, agent=Agent(proj), channels=[])
     with TestClient(app) as c:  # TestClient conta como local
         r = c.get("/admin/conversas")
-        assert r.status_code == 200 and "não definido" in r.text
+        assert r.status_code == 200 and "nêo definido" in r.text
     with TestClient(app, client=("203.0.113.9", 5000)) as c:
         assert c.get("/admin/conversas").status_code == 403
-    monkeypatch.setenv(proj.admin_token_env, "troque-este-token")  # valor do .env.example não vale como token
+    monkeypatch.setenv(proj.admin_token_env, "troque-este-token")  # valor do .env.example nêo vale como token
     with TestClient(app, client=("203.0.113.9", 5000)) as c:
         assert c.get("/admin/conversas").status_code == 403
         assert c.post("/admin/login", data={"token": "troque-este-token"}).status_code == 401
@@ -153,7 +153,7 @@ def test_sem_token_so_local(proj, monkeypatch):
 def test_takeover_silencia_e_release_retoma(env):
     c, agent, fake = env
     say(c, "u1", "quero agendar")
-    assert any("e-mail" in t for t in say(c, "u1", "João Silva"))
+    assert any("e-mail" in t for t in say(c, "u1", "Joêo Silva"))
     sid = agent.store.session("fake", "u1")["id"]
     tok = login(c)
 
@@ -161,20 +161,20 @@ def test_takeover_silencia_e_release_retoma(env):
     assert agent.store.get_session(sid)["status"] == "human"
     n = len(agent.notifier.log)
     assert say(c, "u1", "tem alguém aí?") == []  # bot em silêncio
-    assert any("tem alguém aí?" in txt for _, txt in agent.notifier.log[n:])  # virou notificação
+    assert any("tem alguém aí?" in txt for _, txt in agent.notifier.log[n:])  # virou notificaçêo
 
     # resposta humana chega ao canal
-    r = c.post(f"/admin/conversas/{sid}/responder", data={"csrf": tok, "text": "Oi João, aqui é a Ana."})
+    r = c.post(f"/admin/conversas/{sid}/responder", data={"csrf": tok, "text": "Oi Joêo, aqui é a Ana."})
     assert r.status_code == 200
-    assert fake.sent == [("u1", "Oi João, aqui é a Ana.")]
-    assert "Oi João, aqui é a Ana." in c.get(f"/admin/conversas/{sid}").text
+    assert fake.sent == [("u1", "Oi Joêo, aqui é a Ana.")]
+    assert "Oi Joêo, aqui é a Ana." in c.get(f"/admin/conversas/{sid}").text
 
     c.post(f"/admin/conversas/{sid}/devolver", data={"csrf": tok})
     assert agent.store.get_session(sid)["status"] == "bot"
     replies = say(c, "u1", "joao@exemplo.com")  # continua do mesmo slot (email → motivo)
     assert any("assunto" in t for t in replies)
     st = agent.store.get_session(sid)["state"]
-    assert st["service"] == "agendar" and st["slots"]["nome"] == "João Silva" and st["current"] == "motivo"
+    assert st["service"] == "agendar" and st["slots"]["nome"] == "Joêo Silva" and st["current"] == "motivo"
 
 
 def test_resposta_errada_vira_ticket_e_fecha(env):

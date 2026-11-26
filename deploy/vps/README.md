@@ -12,7 +12,7 @@ Uma VPS Linux (Ubuntu 22.04+/Debian 12) com **4 vCPU / 8 GB RAM** roda o bot com
 | `evolution` + `evolution-db` + `evolution-redis` | WhatsApp via Evolution API v2 (perfil `whatsapp`) | 8080 |
 | `caddy` | HTTPS automático (Let's Encrypt) para `DOMAIN` e `EVOLUTION_DOMAIN` | 80/443 |
 
-## Instalação automática
+## Instalaçêo automática
 
 1. Aponte o DNS (registro A) de `bot.suaempresa.com.br` e `whats.bot.suaempresa.com.br` para o IP da VPS.
 2. Rode:
@@ -44,22 +44,22 @@ docker compose exec app transformsite ingest
 ```
 
 Depois abra `https://whats.SEU_DOMINIO/manager`, entre com a `EVOLUTION_API_KEY` e leia o QR Code com o
-WhatsApp do número de atendimento. **Atenção:** a Evolution usa o WhatsApp Web (não oficial) — há risco de
-bloqueio do número em uso abusivo. Para operação crítica, use a Cloud API oficial da Meta
+WhatsApp do número de atendimento. **Atençêo:** a Evolution usa o WhatsApp Web (nêo oficial) — há risco de
+bloqueio do número em uso abusivo. Para operaçêo crítica, use a Cloud API oficial da Meta
 (`channels.whatsapp_cloud`).
 
 ## Telegram
 
 Crie o bot no @BotFather, coloque `TELEGRAM_BOT_TOKEN` no `.env` e reinicie: `docker compose restart app`.
-O bot usa long polling (não precisa de webhook público).
+O bot usa long polling (nêo precisa de webhook público).
 
-## Operação
+## Operaçêo
 
 ```bash
 docker compose logs -f app                       # logs
 docker compose exec app transformsite ingest     # re-ler o site (agende no cron: diário)
 docker compose exec app transformsite report     # métricas
-docker compose exec app transformsite privacy purge   # retenção LGPD (agende no cron)
+docker compose exec app transformsite privacy purge   # retençêo LGPD (agende no cron)
 ```
 
 Cron sugerido (`crontab -e`):

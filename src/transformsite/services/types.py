@@ -1,4 +1,4 @@
-"""Tipos de slot: extração + normalização + validação determinísticas (sem LLM).
+"""Tipos de slot: extraçêo + normalizaçêo + validaçêo determinísticas (sem LLM).
 
 Cada tipo expõe `extract(texto, slot) -> valor | None` e `fmt(valor) -> str`.
 """
@@ -90,7 +90,7 @@ def ex_enum(text, slot):
     values = slot.values or []
     t = _n(text)
     tw = set(re.findall(r"\w+", t))
-    # número da opção ("2")
+    # número da opçêo ("2")
     m = re.fullmatch(r"\s*(\d{1,2})\s*[).]?\s*", t)
     if m and 1 <= int(m.group(1)) <= len(values):
         return values[int(m.group(1)) - 1]
@@ -200,7 +200,7 @@ def ex_date(text, slot):
 
 
 def ex_datetime(text, slot):
-    # escolha por número de opção já resolvida pelo motor; aqui só texto livre
+    # escolha por número de opçêo já resolvida pelo motor; aqui só texto livre
     m = re.search(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}", text)
     if m:
         return m.group(0)
@@ -257,7 +257,7 @@ OPPORTUNISTIC = {"email", "phone_br", "cpf", "cep", "datetime", "date"}
 FORMATTERS: dict[str, Callable[[Any], str]] = {
     "datetime": fmt_datetime,
     "date": fmt_date,
-    "yes_no": lambda v: "sim" if v else "não",
+    "yes_no": lambda v: "sim" if v else "nêo",
 }
 
 

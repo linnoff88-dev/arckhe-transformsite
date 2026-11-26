@@ -1,4 +1,4 @@
 # Decisões (só acrescentar)
 
-| data | decisão | motivo | alternativa descartada |
+| data | decisêo | motivo | alternativa descartada |
 |---|---|---|---|

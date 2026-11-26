@@ -1,9 +1,9 @@
 """Canal Telegram (Bot API via httpx).
 
-- Entrada: `update` com `message` (texto) ou `callback_query` (clique em botão inline).
+- Entrada: `update` com `message` (texto) ou `callback_query` (clique em botêo inline).
 - Saída: `sendMessage` com inline keyboard (até 8 opções, uma por linha); acima disso, texto numerado.
 - Recebimento: long polling (`run_poller`) ou webhook (`router` → POST /webhook/telegram).
-- Mensagens vindas de grupos são ignoradas (o grupo serve para avisos de handoff à equipe).
+- Mensagens vindas de grupos sêo ignoradas (o grupo serve para avisos de handoff à equipe).
 """
 
 from __future__ import annotations
@@ -130,7 +130,7 @@ class TelegramChannel(Channel):
     def to_payloads(self, user_id: str, out: OutMsg) -> list[dict]:
         caps = self.caps
         if any(len(str(c["id"]).encode()) > MAX_CALLBACK for c in out.choices):
-            caps = Capabilities(buttons=0, files=caps.files)  # id não cabe em callback_data → numerado
+            caps = Capabilities(buttons=0, files=caps.files)  # id nêo cabe em callback_data → numerado
         text, choices, mode = render_text(out, caps)
         chunks = split_text(text)
         payloads: list[dict] = [{"method": "sendMessage", "chat_id": user_id, "text": c} for c in chunks]
@@ -180,12 +180,12 @@ class TelegramChannel(Channel):
             }
         return {"update_id": 1, "message": {"message_id": msg_id or uuid.uuid4().hex, "chat": chat, "from": frm, "text": text}}
 
-    # ---------- integração com o servidor ----------
+    # ---------- integraçêo com o servidor ----------
     def process_update(self, agent, update: dict) -> None:
         if "callback_query" in update:
             try:
                 self.call("answerCallbackQuery", {"callback_query_id": update["callback_query"].get("id")})
-            except Exception as e:  # botão fica "carregando", mas a conversa segue
+            except Exception as e:  # botêo fica "carregando", mas a conversa segue
                 log.warning("answerCallbackQuery: %s", e)
         msg = self.to_inbound(update)
         if msg is None:
@@ -217,7 +217,7 @@ class TelegramChannel(Channel):
                 offset = up["update_id"] + 1
                 try:
                     self.process_update(agent, up)
-                except Exception as e:  # uma mensagem ruim não derruba o poller
+                except Exception as e:  # uma mensagem ruim nêo derruba o poller
                     log.exception("telegram update %s: %s", up.get("update_id"), e)
 
     def attach(self, agent) -> None:

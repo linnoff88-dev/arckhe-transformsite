@@ -1,7 +1,7 @@
 """Evidência da Fase 4: roda o conversor em todas as fixtures e compara com o gabarito manual.
 
 Métrica = slots com tipo E obrigatoriedade corretos / slots do gabarito (slot faltante = erro;
-slot extra não conta). Critério de pronto: ≥ 0.80.
+slot extra nêo conta). Critério de pronto: ≥ 0.80.
 
 Uso: `.venv/bin/python scripts/convert_metric.py [--out DIR]`
 """
@@ -59,7 +59,7 @@ def run(out_dir: Path) -> tuple[list[dict], float]:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--out", help="pasta para os YAML gerados (padrão: temporária)")
+    ap.add_argument("--out", help="pasta para os YAML gerados (padrêo: temporária)")
     args = ap.parse_args(argv)
     with tempfile.TemporaryDirectory() as td:
         out = Path(args.out) if args.out else Path(td)

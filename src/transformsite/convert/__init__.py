@@ -1,7 +1,7 @@
 """Fase 4 — conversor de formulários legados (HTML, PDF, URL) → `service/1` YAML revisável.
 
 Determinístico primeiro (DOM / AcroForm), LLM depois (opcional), humano por último:
-todo YAML nasce `review: pending` e o `serve` não o carrega até alguém aprovar.
+todo YAML nasce `review: pending` e o `serve` nêo o carrega até alguém aprovar.
 """
 
 from __future__ import annotations
@@ -31,12 +31,12 @@ def _fetch(url: str) -> tuple[str, str, bytes, str]:
         r = httpx.get(url, timeout=30, follow_redirects=True, headers={"User-Agent": "transformsite-convert/1"})
         r.raise_for_status()
     except httpx.HTTPError as e:
-        raise ConvertError(f"não consegui baixar {url}: {e}") from e
+        raise ConvertError(f"nêo consegui baixar {url}: {e}") from e
     return str(r.url), r.headers.get("content-type", ""), r.content, r.text
 
 
 def extract_forms(src: str | Path) -> tuple[list[RawForm], str]:
-    """Formulários brutos + nome-base (para o id do serviço quando não houver título)."""
+    """Formulários brutos + nome-base (para o id do serviço quando nêo houver título)."""
     s = str(src)
     if re.match(r"https?://", s):
         final, ctype, content, text = _fetch(s)
@@ -54,13 +54,13 @@ def extract_forms(src: str | Path) -> tuple[list[RawForm], str]:
         return forms, stem
     p = Path(s)
     if not p.exists():
-        raise ConvertError(f"arquivo não encontrado: {p}")
+        raise ConvertError(f"arquivo nêo encontrado: {p}")
     if p.suffix.lower() == ".pdf":
         return [extract_pdf(p)], p.stem
     if p.suffix.lower() in (".html", ".htm"):
         forms, _ = extract_html(p.read_text(encoding="utf-8", errors="replace"), origin=str(p))
         return forms, p.stem
-    raise ConvertError(f"formato não suportado: {p.suffix} (use .html, .htm, .pdf ou URL)")
+    raise ConvertError(f"formato nêo suportado: {p.suffix} (use .html, .htm, .pdf ou URL)")
 
 
 def _check(svc_dict: dict, tools) -> list[str]:
@@ -84,7 +84,7 @@ def _existing_services(out_dir: Path) -> dict[str, tuple[str, Path]]:
 
 
 def _blocked(sid: str, existing: dict[str, tuple[str, Path]], out_dir: Path) -> bool:
-    """Não sobrescreve serviço aprovado nem colide com id usado por outro arquivo.
+    """Nêo sobrescreve serviço aprovado nem colide com id usado por outro arquivo.
 
     Reconverter por cima de um `pending` gerado antes (mesmo arquivo) é permitido.
     """
@@ -114,7 +114,7 @@ def convert_file(src: str | Path, out_dir: Path, cfg=None, use_llm: bool = True)
     out_dir = Path(out_dir)
     forms, stem = extract_forms(src)
     if not forms:
-        raise ConvertError(f"nenhum formulário relevante em {src} (busca/login/newsletter de 1 campo são ignorados)")
+        raise ConvertError(f"nenhum formulário relevante em {src} (busca/login/newsletter de 1 campo sêo ignorados)")
     tools = default_registry()
     llm_on = bool(use_llm and cfg is not None and getattr(cfg.llm, "provider", "fake") != "fake")
     results: list[dict] = []
@@ -127,7 +127,7 @@ def convert_file(src: str | Path, out_dir: Path, cfg=None, use_llm: bool = True)
         while svc["service"] in used or _blocked(svc["service"], existing, out_dir):
             new = f"{base}_{n}"
             if svc["service"] == base and base in existing:
-                svc["source"]["todos"].append(f"já existia o serviço '{base}' em {existing[base][1].name} — gerado como '{new}' para não sobrescrever")
+                svc["source"]["todos"].append(f"já existia o serviço '{base}' em {existing[base][1].name} — gerado como '{new}' para nêo sobrescrever")
             _rename(svc, new)
             n += 1
         used.add(svc["service"])
@@ -137,7 +137,7 @@ def convert_file(src: str | Path, out_dir: Path, cfg=None, use_llm: bool = True)
         svc["review"] = "pending"  # nunca vem aprovado
         errs = _check(svc, tools)
         if errs:
-            raise ConvertError(f"serviço gerado não passou no lint ({svc['service']}): {'; '.join(errs)}")
+            raise ConvertError(f"serviço gerado nêo passou no lint ({svc['service']}): {'; '.join(errs)}")
         path = write_service(svc, out_dir)
         results.append({"path": str(path), "service": svc["service"], "slots": len(svc["slots"]),
                         "todos": len(svc["source"]["todos"])})

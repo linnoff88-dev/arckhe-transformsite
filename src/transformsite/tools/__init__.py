@@ -1,8 +1,8 @@
-"""Registro de ferramentas. Cada ferramenta é uma função Python com metadados.
+"""Registro de ferramentas. Cada ferramenta é uma funçêo Python com metadados.
 
-Ferramentas do projeto: crie `tools/<nome>.py` com uma função `register(registry)` que chama
+Ferramentas do projeto: crie `tools/<nome>.py` com uma funçêo `register(registry)` que chama
 `registry.add("minha.tool", fn, side_effects=True, description="...")`.
-A função recebe `(ctx, **args)` e devolve um dict.
+A funçêo recebe `(ctx, **args)` e devolve um dict.
 """
 
 from __future__ import annotations

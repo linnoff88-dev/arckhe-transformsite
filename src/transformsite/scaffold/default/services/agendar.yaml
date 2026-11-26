@@ -8,7 +8,7 @@ intent:
     - "marcar horário"
     - "agendar uma conversa"
     - "agendar atendimento"
-    - "quero marcar uma reunião"
+    - "quero marcar uma reuniêo"
   keywords: ["agendar", "agendamento", "marcar horario"]
 auth: none
 legal_basis: contrato
@@ -45,7 +45,7 @@ action:
 on_success:
   reply: "Agendado! Protocolo {result.id}. O convite foi enviado para {email}."
 on_failure:
-  reply: "Não consegui agendar agora."
+  reply: "Nêo consegui agendar agora."
   handoff: {queue: atendimento}
 handoff:
   queue: atendimento

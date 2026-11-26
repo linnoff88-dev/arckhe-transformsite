@@ -12,7 +12,7 @@
 <div class="row" style="margin-bottom:12px">
   {% if s.status == 'human' %}
   <form class="inline" method="post" action="/admin/conversas/{{ s.id }}/devolver"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="pri">Devolver ao bot</button></form>
-  <span class="mute">O bot está em silêncio; mensagens do cliente chegam como notificação.</span>
+  <span class="mute">O bot está em silêncio; mensagens do cliente chegam como notificaçêo.</span>
   {% else %}
   <form class="inline" method="post" action="/admin/conversas/{{ s.id }}/assumir"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="pri">Assumir</button></form>
   {% endif %}
@@ -25,11 +25,11 @@
     <div class="meta">{{ m.ts|dt }} · {{ m.author or m.direction }}{% if m.data.get('kind') %} · {{ m.data.kind }}{% endif %}</div>{{ m.text }}
     {% if m.data.get('citations') %}<div class="meta">{% for c in m.data.citations %}[{{ c.n }}] <a href="{{ c.url|url }}" rel="noopener noreferrer" target="_blank">{{ c.url }}</a> {% endfor %}</div>{% endif %}
     {% if m.direction == 'out' and m.author == 'bot' %}
-    <form class="inline" method="post" action="/admin/conversas/{{ s.id }}/errada"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="msg_id" value="{{ m.id }}"><button class="small" title="cria ticket de erro com a citação">resposta errada</button></form>
+    <form class="inline" method="post" action="/admin/conversas/{{ s.id }}/errada"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="msg_id" value="{{ m.id }}"><button class="small" title="cria ticket de erro com a citaçêo">resposta errada</button></form>
     {% endif %}
   </div>
 {% else %}
-  <p class="mute">Sem mensagens (podem ter sido expurgadas pela retenção).</p>
+  <p class="mute">Sem mensagens (podem ter sido expurgadas pela retençêo).</p>
 {% endfor %}
 </div>
 

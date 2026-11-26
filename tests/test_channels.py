@@ -20,7 +20,7 @@ from transformsite.channels.web import WIDGET_JS, WebChannel
 from transformsite.channels.whatsapp import CloudAPIChannel, EvolutionChannel
 from transformsite.messages import OutMsg
 
-CHOICES5 = [{"id": f"o{i}", "label": f"Opção {i}"} for i in range(1, 6)]
+CHOICES5 = [{"id": f"o{i}", "label": f"Opçêo {i}"} for i in range(1, 6)]
 
 
 def opts(n: int) -> list[dict]:
@@ -73,8 +73,8 @@ TG_MESSAGE = {
     "update_id": 10001,
     "message": {
         "message_id": 55,
-        "from": {"id": 777, "is_bot": False, "first_name": "João", "last_name": "Silva", "language_code": "pt-br"},
-        "chat": {"id": 777, "first_name": "João", "type": "private"},
+        "from": {"id": 777, "is_bot": False, "first_name": "Joêo", "last_name": "Silva", "language_code": "pt-br"},
+        "chat": {"id": 777, "first_name": "Joêo", "type": "private"},
         "date": 1790000000,
         "text": "quero agendar",
     },
@@ -83,12 +83,12 @@ TG_CALLBACK = {
     "update_id": 10002,
     "callback_query": {
         "id": "4382bfdwdsb323b2d9",
-        "from": {"id": 777, "first_name": "João"},
+        "from": {"id": 777, "first_name": "Joêo"},
         "message": {
             "message_id": 56,
             "chat": {"id": 777, "type": "private"},
             "text": "Confirmo?",
-            "reply_markup": {"inline_keyboard": [[{"text": "Sim, confirmar", "callback_data": "sim"}], [{"text": "Não, corrigir", "callback_data": "nao"}]]},
+            "reply_markup": {"inline_keyboard": [[{"text": "Sim, confirmar", "callback_data": "sim"}], [{"text": "Nêo, corrigir", "callback_data": "nao"}]]},
         },
         "data": "sim",
     },
@@ -99,7 +99,7 @@ def test_telegram_parse_message_e_callback():
     ch = TelegramChannel()
     m = ch.to_inbound(TG_MESSAGE)
     assert (m.channel, m.user_id, m.text, m.msg_id) == ("telegram", "777", "quero agendar", "tg:777:55")
-    assert m.meta["name"] == "João Silva" and m.meta["lang"] == "pt-br"
+    assert m.meta["name"] == "Joêo Silva" and m.meta["lang"] == "pt-br"
     c = ch.to_inbound(TG_CALLBACK)
     assert (c.user_id, c.choice_id, c.text, c.msg_id) == ("777", "sim", "Sim, confirmar", "tgcb:4382bfdwdsb323b2d9")
 
@@ -118,7 +118,7 @@ def test_telegram_botoes_e_degradacao():
     assert len(p) == 1 and p[0]["method"] == "sendMessage" and p[0]["chat_id"] == "777"
     kb = p[0]["reply_markup"]["inline_keyboard"]
     assert [row[0]["callback_data"] for row in kb] == ["o1", "o2", "o3", "o4", "o5"] and all(len(r) == 1 for r in kb)
-    assert "[Opção 1]" in ch.payload_text(p[0])
+    assert "[Opçêo 1]" in ch.payload_text(p[0])
     # acima de 8 → numerado
     p9 = ch.to_payloads("777", OutMsg("Escolha:", choices=opts(9)))
     assert "reply_markup" not in p9[0] and "9. Op 9" in p9[0]["text"]
@@ -236,7 +236,7 @@ def test_evolution_ignora_proprias_grupos_e_audio():
 def test_evolution_degradacao_numerada_e_lista():
     ch = EvolutionChannel()
     p = ch.to_payloads("5551999990000", OutMsg("Escolha:", choices=CHOICES5))
-    assert p == [{"path": "sendText", "number": "5551999990000", "text": "Escolha:\n\n1. Opção 1\n2. Opção 2\n3. Opção 3\n4. Opção 4\n5. Opção 5\n(responda com o número)"}]
+    assert p == [{"path": "sendText", "number": "5551999990000", "text": "Escolha:\n\n1. Opçêo 1\n2. Opçêo 2\n3. Opçêo 3\n4. Opçêo 4\n5. Opçêo 5\n(responda com o número)"}]
     p3 = ch.to_payloads("1", OutMsg("x", choices=opts(3)))
     assert p3[0]["path"] == "sendText" and "3. Op 3" in p3[0]["text"]  # Baileys: sem botões garantidos
     lst = EvolutionChannel(use_lists=True).to_payloads("1", OutMsg("Escolha:", choices=CHOICES5))
@@ -320,7 +320,7 @@ def test_cloud_degradacao_botoes_lista_numerado():
     assert lst["interactive"]["type"] == "list" and len(lst["interactive"]["action"]["sections"][0]["rows"]) == 5
     num = ch.to_payloads("1", OutMsg("Escolha:", choices=opts(12)))[0]
     assert num["type"] == "text" and "12. Op 12" in num["text"]["body"]
-    # rótulo > 20 chars não cabe em botão → lista com descrição
+    # rótulo > 20 chars nêo cabe em botêo → lista com descriçêo
     longo = ch.to_payloads("1", OutMsg("x", choices=[{"id": "a", "label": "segunda, 05/10 às 12:00 (sala 2)"}, {"id": "b", "label": "B"}]))[0]
     row = longo["interactive"]["action"]["sections"][0]["rows"][0]
     assert longo["interactive"]["type"] == "list" and len(row["title"]) <= 24 and row["title"] + row["description"] == "segunda, 05/10 às 12:00 (sala 2)"
@@ -390,7 +390,7 @@ def test_email_saida_numerada_assunto_re():
     ch.to_inbound(EMAIL_REPLY)
     p = ch.to_payloads("maria.souza@exemplo.com", OutMsg("Escolha:", choices=CHOICES5))[0]
     assert p["subject"] == "Re: Agendamento" and p["in_reply_to"] == "<CAF123@mail.gmail.com>"
-    assert "1. Opção 1" in p["body"] and "5. Opção 5" in p["body"] and "(responda com o número)" in p["body"]
+    assert "1. Opçêo 1" in p["body"] and "5. Opçêo 5" in p["body"] and "(responda com o número)" in p["body"]
     merged = ch.merge([OutMsg("Certo, vamos lá."), OutMsg("Qual assunto?", choices=opts(2))])
     assert merged.text.startswith("Certo, vamos lá.\n\nQual assunto?") and len(merged.choices) == 2
 
@@ -475,7 +475,7 @@ def test_web_widget_e_api(agent):
     assert r.headers["access-control-allow-origin"] == "*"
     menu = d["messages"][-1]
     assert menu["choices"] and {"id", "label"} <= set(menu["choices"][0])
-    # clique no botão do menu
+    # clique no botêo do menu
     r2 = c.post("/api/web/message", json={"session": d["session"], "text": menu["choices"][0]["label"], "choice": menu["choices"][0]["id"]})
     assert "nome" in r2.json()["messages"][-1]["text"].lower()
     # resposta humana via painel chega pelo poll
@@ -488,7 +488,7 @@ def test_web_widget_e_api(agent):
 
 
 def test_web_via_create_app(agent):
-    """Integração com server.create_app: POST real em /api/web/message (regressão do 422 'missing query.request')."""
+    """Integraçêo com server.create_app: POST real em /api/web/message (regressêo do 422 'missing query.request')."""
     from transformsite.server import create_app
 
     app = create_app(agent.cfg, agent=agent, channels=["web"], start_pollers=False)
@@ -503,7 +503,7 @@ def test_web_botoes_citacoes_e_degradacao():
     ch = WebChannel()
     p = ch.to_payloads("s", OutMsg("Resposta.", choices=CHOICES5, citations=[{"n": 1, "url": "https://x.gov.br/a", "title": "A"}]))[0]
     assert p["text"] == "Resposta." and len(p["choices"]) == 5 and p["citations"][0]["url"] == "https://x.gov.br/a"
-    assert "[Opção 5]" in ch.payload_text(p) and "[1] https://x.gov.br/a" in ch.payload_text(p)
+    assert "[Opçêo 5]" in ch.payload_text(p) and "[1] https://x.gov.br/a" in ch.payload_text(p)
     p7 = ch.to_payloads("s", OutMsg("x", choices=opts(7)))[0]
     assert p7["choices"] == [] and "7. Op 7" in p7["text"]
 

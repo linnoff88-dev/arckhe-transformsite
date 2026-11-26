@@ -3,8 +3,8 @@
 - Entrada: dict {from, subject, body, message_id, in_reply_to} (vindo do IMAP ou de testes).
   Remove o texto citado (">"), a assinatura ("-- ") e o histórico ("Em ... escreveu:" / "On ... wrote:").
 - Saída: e-mail "Re: <assunto>" com as opções numeradas (sem botões). Várias respostas de um turno
-  podem ser juntas num único e-mail (`send_all`) — e-mail tem cadência de thread, não de chat.
-- Envio via `transformsite.mailer.send_email` (SMTP se configurado; senão .eml em data/outbox).
+  podem ser juntas num único e-mail (`send_all`) — e-mail tem cadência de thread, nêo de chat.
+- Envio via `transformsite.mailer.send_email` (SMTP se configurado; senêo .eml em data/outbox).
 - Recebimento: `run_poller` lê UNSEEN por IMAP a cada 60s e marca como lido.
 """
 
@@ -36,7 +36,7 @@ def normalize_address(addr: str) -> str:
 
 
 def clean_body(body: str) -> str:
-    """Só o texto novo do cliente: corta histórico, citação e assinatura."""
+    """Só o texto novo do cliente: corta histórico, citaçêo e assinatura."""
     lines = (body or "").replace("\r\n", "\n").replace("\r", "\n").split("\n")
     out: list[str] = []
     for i, line in enumerate(lines):
@@ -46,7 +46,7 @@ def clean_body(body: str) -> str:
             break
         if QUOTE_HEADER.match(line):
             break
-        # cabeçalho de citação quebrado em duas linhas ("Em ter., 1 de out., Fulano <x@y>\nescreveu:")
+        # cabeçalho de citaçêo quebrado em duas linhas ("Em ter., 1 de out., Fulano <x@y>\nescreveu:")
         if i + 1 < len(lines) and QUOTE_HEADER.match(line + " " + lines[i + 1]) and re.match(r"^\s*(em|on)\b", line, re.I):
             break
         if HEADER_BLOCK.match(line) and out and not out[-1].strip() and i + 1 < len(lines) and re.match(r"^\s*(enviad[oa]|sent|data|date)\s*:", lines[i + 1], re.I):
@@ -58,7 +58,7 @@ def clean_body(body: str) -> str:
 
 
 def is_auto_mail(headers: dict, own_address: str = "") -> bool:
-    """Proteção contra laço: respostas automáticas, listas, bounces e o próprio remetente."""
+    """Proteçêo contra laço: respostas automáticas, listas, bounces e o próprio remetente."""
     h = {k.lower(): str(v).lower() for k, v in (headers or {}).items()}
     if h.get("auto-submitted", "no") not in ("", "no"):
         return True
@@ -190,7 +190,7 @@ class EmailChannel(Channel):
         ec = self.cfg.email
         pwd = os.environ.get(ec.imap_password_env, "")
         if not ec.imap_host or not pwd:
-            raise RuntimeError(f"IMAP não configurado (email.imap_host e variável {ec.imap_password_env})")
+            raise RuntimeError(f"IMAP nêo configurado (email.imap_host e variável {ec.imap_password_env})")
         imap = imaplib.IMAP4_SSL(ec.imap_host, ec.imap_port)
         imap.login(ec.imap_user or ec.smtp_from, pwd)
         return imap
@@ -204,7 +204,7 @@ class EmailChannel(Channel):
             for num in (data[0].split() if data and data[0] else []):
                 typ, parts = imap.fetch(num, "(BODY.PEEK[])")
                 raw = next((p[1] for p in parts or [] if isinstance(p, tuple)), None)
-                imap.store(num, "+FLAGS", "\\Seen")  # marca antes: e-mail com defeito não vira laço
+                imap.store(num, "+FLAGS", "\\Seen")  # marca antes: e-mail com defeito nêo vira laço
                 if not raw:
                     continue
                 try:

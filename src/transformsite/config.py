@@ -1,4 +1,4 @@
-"""Carrega `transformsite.yaml` (o arquivo de configuração de um projeto)."""
+"""Carrega `transformsite.yaml` (o arquivo de configuraçêo de um projeto)."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ class LLMConfig(BaseModel):
     embed_model: str = "bge-m3"
     temperature: float = 0.1
     timeout: float = 180.0
-    allow_pii: bool = True  # local: ok. Provider externo deve ser false salvo autorização.
+    allow_pii: bool = True  # local: ok. Provider externo deve ser false salvo autorizaçêo.
 
 
 class KBConfig(BaseModel):
@@ -79,7 +79,7 @@ class EmailConfig(BaseModel):
     imap_port: int = 993
     imap_user: str = ""
     imap_password_env: str = "IMAP_PASSWORD"
-    outbox_dir: str = "data/outbox"  # sem SMTP configurado, e-mails vão para cá (.eml)
+    outbox_dir: str = "data/outbox"  # sem SMTP configurado, e-mails vêo para cá (.eml)
 
 
 class ChannelsConfig(BaseModel):
@@ -165,7 +165,7 @@ def find_root(start: Path | None = None) -> Path | None:
 def load(root: Path | str | None = None) -> ProjectConfig:
     r = Path(root) if root else find_root()
     if r is None:
-        raise SystemExit(f"{CONFIG_NAME} não encontrado. Rode `transformsite init <pasta>` primeiro.")
+        raise SystemExit(f"{CONFIG_NAME} nêo encontrado. Rode `transformsite init <pasta>` primeiro.")
     r = r.resolve()
     load_dotenv(r / ".env")
     raw = yaml.safe_load((r / CONFIG_NAME).read_text(encoding="utf-8")) or {}

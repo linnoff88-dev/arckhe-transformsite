@@ -1,4 +1,4 @@
-"""Avaliação: golden set (perguntas) e cenários de conversa (roteiros com asserções)."""
+"""Avaliaçêo: golden set (perguntas) e cenários de conversa (roteiros com asserções)."""
 
 from __future__ import annotations
 
@@ -104,7 +104,7 @@ def run_scenario(cfg: ProjectConfig, scenario: dict, channel: str = "cli", agent
     tmp = Path(tempfile.mkdtemp(prefix="ts-scn-"))
     c = copy.deepcopy(cfg)
     c.root = tmp
-    # padrão determinístico (fake); --real-llm usa o provider configurado
+    # padrêo determinístico (fake); --real-llm usa o provider configurado
     c.llm.provider = scenario.get("llm") or (cfg.llm.provider if real_llm else "fake")
     if (cfg.root / "services").exists():
         shutil.copytree(cfg.root / "services", tmp / "services")
@@ -144,7 +144,7 @@ def run_scenario(cfg: ProjectConfig, scenario: dict, channel: str = "cli", agent
                     raise AssertionError(f"passo {i + 1}: esperava '{e}' em: {bot[:300]!r}")
             for e in step.get("expect_not", []):
                 if _n(e) in nb:
-                    raise AssertionError(f"passo {i + 1}: não devia conter '{e}' em: {bot[:300]!r}")
+                    raise AssertionError(f"passo {i + 1}: nêo devia conter '{e}' em: {bot[:300]!r}")
             if step.get("expect_silent") and bot.strip():
                 raise AssertionError(f"passo {i + 1}: esperava nenhuma resposta, veio {bot[:200]!r}")
         for k, v in (scenario.get("asserts") or {}).items():
@@ -162,7 +162,7 @@ def run_scenario(cfg: ProjectConfig, scenario: dict, channel: str = "cli", agent
                         raise AssertionError(f"evento {ev}: esperava {n}, veio {g}")
                 continue
             else:
-                raise AssertionError(f"asserção desconhecida: {k}")
+                raise AssertionError(f"asserçêo desconhecida: {k}")
             if got != v:
                 raise AssertionError(f"{k}: esperava {v}, veio {got}")
     except AssertionError as e:

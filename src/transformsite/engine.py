@@ -39,7 +39,7 @@ Responda JSON {{"tipo": "servico"|"pergunta"|"saudacao"|"humano"|"outro", "servi
 Mensagem: {text}"""
 
 EXTRACT_PROMPT = """Extraia da mensagem do cliente os valores para os campos abaixo. Só inclua campos claramente
-informados na mensagem; não invente. Data/hora: copie como o cliente escreveu (ex.: "quinta às 10").
+informados na mensagem; nêo invente. Data/hora: copie como o cliente escreveu (ex.: "quinta às 10").
 Campos:
 {fields}
 Mensagem: {text}
@@ -151,14 +151,14 @@ class Agent:
         if self._is_handoff_trigger(nt, state):
             return outs + [self._handoff(sess, "pedido do cliente", text)]
 
-        # oferta pendente de handoff (após "não sei")
+        # oferta pendente de handoff (após "nêo sei")
         if state.get("offer") == "handoff":
             yn = ex_yes_no(text, None) if not msg.choice_id else msg.choice_id == "sim"
             state.pop("offer", None)
             q = state.pop("offer_q", "")
             self.store.save_state(sid, state)
             if yn is True:
-                return outs + [self._handoff(sess, "bot não soube responder", q)]
+                return outs + [self._handoff(sess, "bot nêo soube responder", q)]
             if yn is False:
                 return outs + [OutMsg("Tudo bem! Posso ajudar com outra coisa?", choices=self._menu().choices)]
 
@@ -193,7 +193,7 @@ class Agent:
         # aviso de dado sensível fora de serviço
         if PII_INBOUND.search(text):
             self.store.event(sid, "pii_warning")
-            outs.append(OutMsg("Por segurança, não envie CPF, cartão ou documentos por aqui fora de um atendimento que peça isso. Já descartei esse dado.", kind="reply"))
+            outs.append(OutMsg("Por segurança, nêo envie CPF, cartêo ou documentos por aqui fora de um atendimento que peça isso. Já descartei esse dado.", kind="reply"))
             text = PII_INBOUND.sub("[removido]", text)
 
         kind, svc_name = self._route(text, msg)
@@ -280,8 +280,8 @@ class Agent:
             self.store.event(sid, "nao_sei", error=ans.error)
             return [
                 OutMsg(
-                    "Não encontrei essa informação na nossa base e prefiro não chutar. Quer que eu passe sua pergunta para a equipe?",
-                    choices=[{"id": "sim", "label": "Sim, passar para a equipe"}, {"id": "nao", "label": "Não, obrigado"}],
+                    "Nêo encontrei essa informaçêo na nossa base e prefiro nêo chutar. Quer que eu passe sua pergunta para a equipe?",
+                    choices=[{"id": "sim", "label": "Sim, passar para a equipe"}, {"id": "nao", "label": "Nêo, obrigado"}],
                     kind="nao_sei",
                 )
             ]
@@ -349,7 +349,7 @@ class Agent:
     def _next(self, sess: dict, svc: Service, state: dict, pre: list[OutMsg] | None = None) -> list[OutMsg]:
         sid = sess["id"]
         outs = list(pre or [])
-        # validação via ferramenta (ex.: horário livre) de todo slot preenchido, venha de onde vier
+        # validaçêo via ferramenta (ex.: horário livre) de todo slot preenchido, venha de onde vier
         validated = state.setdefault("validated", {})
         for s in self._active_slots(svc, state):
             if s.name in state["slots"] and s.constraints.get("validate_tool") and validated.get(s.name) != state["slots"][s.name]:
@@ -357,7 +357,7 @@ class Agent:
                 if v:
                     return outs + v
                 validated[s.name] = state["slots"][s.name]
-        # autenticação OTP antes dos slots sensíveis
+        # autenticaçêo OTP antes dos slots sensíveis
         if state.get("auth_ok") is False:
             ident = svc.auth.get("identifier") if isinstance(svc.auth, dict) else None
             if ident and ident in state["slots"] and state.get("phase") != "otp":
@@ -385,7 +385,7 @@ class Agent:
                 if s.type == "datetime" and opts:
                     prompt += " Tenho estes horários livres (ou escreva outro dia/horário):"
                 elif s.type == "datetime" and not opts:
-                    prompt += " Não encontrei horários livres nos próximos dias."
+                    prompt += " Nêo encontrei horários livres nos próximos dias."
             elif s.type == "enum" and s.values:
                 choices = [{"id": v, "label": (s.labels or {}).get(v, v.replace("_", " "))} for v in s.values]
                 state["options"] = choices
@@ -402,7 +402,7 @@ class Agent:
             return outs + [
                 OutMsg(
                     render(svc.confirm.template, self._ctx(sess, svc, state)),
-                    choices=[{"id": "sim", "label": "Sim, confirmar"}, {"id": "nao", "label": "Não, corrigir"}],
+                    choices=[{"id": "sim", "label": "Sim, confirmar"}, {"id": "nao", "label": "Nêo, corrigir"}],
                     kind="service",
                 )
             ]
@@ -457,7 +457,7 @@ class Agent:
             yn = (msg.choice_id == "sim") if msg.choice_id in ("sim", "nao") else ex_yes_no(text, None)
             if yn is True:
                 return self._execute(sess, svc, state)
-            # correção direta ("não, o telefone é 51 98888-7777")
+            # correçêo direta ("nêo, o telefone é 51 98888-7777")
             changed = self._extract_into(svc, state, text, current=None, correction=True)
             if changed:
                 self.store.event(sid, "slot_corrected", service=svc.service, slots=changed)
@@ -469,7 +469,7 @@ class Agent:
                 return [OutMsg("O que você quer corrigir? Pode escrever o dado certo direto também.", choices=ch, kind="service")]
             if self._looks_question(text):
                 return self._answer_inline(sess, svc, state, text)
-            return [OutMsg("Não entendi. Confirma? Responda \"sim\" ou \"não\".", choices=[{"id": "sim", "label": "Sim"}, {"id": "nao", "label": "Não"}], kind="service")]
+            return [OutMsg("Nêo entendi. Confirma? Responda \"sim\" ou \"nêo\".", choices=[{"id": "sim", "label": "Sim"}, {"id": "nao", "label": "Nêo"}], kind="service")]
 
         if phase == "correct":
             target = None
@@ -496,7 +496,7 @@ class Agent:
         if cur and not cur.required and _n(text).strip(" .!") in SKIP:
             state.setdefault("skipped", []).append(cur.name)
             return self._next(sess, svc, state)
-        # opção escolhida (botão / número / rótulo)
+        # opçêo escolhida (botêo / número / rótulo)
         if cur and state.get("options"):
             picked = self._pick_option(state["options"], msg, cur)
             if picked is not None:
@@ -518,7 +518,7 @@ class Agent:
             self.store.event(sid, "slot_retry", service=svc.service, slot=cur.name, attempt=att)
             if att >= 3:
                 self.store.save_state(sid, {"welcomed": True})
-                return [self._handoff(sess, f"não consegui coletar '{cur.name}'", text)]
+                return [self._handoff(sess, f"nêo consegui coletar '{cur.name}'", text)]
             self.store.save_state(sid, state)
             hint = self._hint(cur, text)
             return [OutMsg(f"{hint} {cur.prompt}".strip(), choices=state.get("options") or [], kind="service")]
@@ -530,15 +530,15 @@ class Agent:
 
     def _hint(self, s: Slot, text: str) -> str:
         return {
-            "email": "Esse e-mail não parece válido.",
-            "phone_br": "Não reconheci o telefone (use DDD + número).",
-            "cpf": "Esse CPF não é válido.",
-            "cep": "Não reconheci o CEP.",
-            "datetime": "Não entendi a data e o horário.",
-            "date": "Não entendi a data.",
-            "enum": "Não reconheci a opção.",
+            "email": "Esse e-mail nêo parece válido.",
+            "phone_br": "Nêo reconheci o telefone (use DDD + número).",
+            "cpf": "Esse CPF nêo é válido.",
+            "cep": "Nêo reconheci o CEP.",
+            "datetime": "Nêo entendi a data e o horário.",
+            "date": "Nêo entendi a data.",
+            "enum": "Nêo reconheci a opçêo.",
             "number": "Preciso de um número.",
-        }.get(s.type, "Não entendi.")
+        }.get(s.type, "Nêo entendi.")
 
     def _pick_option(self, options: list[dict], msg: InMsg, s: Slot):
         if msg.choice_id:
@@ -577,7 +577,7 @@ class Agent:
         if outs and not outs[0].choices:  # dia lotado/fechado → próximos livres
             state.pop("partial_date", None)
             outs = self._next(sess, svc, state)
-        outs[0].text = f"{fmt(s.type, bad)} não dá: {r.get('motivo', 'indisponível')}. " + outs[0].text
+        outs[0].text = f"{fmt(s.type, bad)} nêo dá: {r.get('motivo', 'indisponível')}. " + outs[0].text
         return outs
 
     def _looks_question(self, text: str) -> bool:
@@ -588,7 +588,7 @@ class Agent:
         ans = self.rag.answer(text)
         self.store.event(sess["id"], "question_in_service", service=svc.service, nao_sei=ans.nao_sei)
         if ans.nao_sei:
-            first = OutMsg("Não encontrei isso na nossa base; posso passar para a equipe depois. Vamos continuar:", kind="nao_sei")
+            first = OutMsg("Nêo encontrei isso na nossa base; posso passar para a equipe depois. Vamos continuar:", kind="nao_sei")
         else:
             first = OutMsg(ans.text, citations=ans.citations, kind="answer")
         nxt = self._next(sess, svc, state)
@@ -681,14 +681,14 @@ class Agent:
             contact = ident
         if not contact:
             self.store.save_state(sess["id"], {"welcomed": True})
-            return [self._handoff(sess, "cadastro não localizado para validação", f"{ident_name} informado")]
+            return [self._handoff(sess, "cadastro nêo localizado para validaçêo", f"{ident_name} informado")]
         code = f"{random.SystemRandom().randint(0, 999999):06d}"
         state["otp"] = {"code": code, "exp": time.time() + 600, "tries": 0}
         state["phase"] = "otp"
         self.store.save_state(sess["id"], state)
         from .mailer import send_email
 
-        send_email(self.cfg, contact, f"Seu código: {code}", f"Seu código de confirmação é {code}. Ele vale por 10 minutos.")
+        send_email(self.cfg, contact, f"Seu código: {code}", f"Seu código de confirmaçêo é {code}. Ele vale por 10 minutos.")
         self.store.event(sess["id"], "otp_sent", service=svc.service)
         masked = re.sub(r"^(.).*(@.*)$", r"\1***\2", contact)
         return [OutMsg(f"Enviei um código de 6 dígitos para {masked}. Digite o código aqui.", kind="service")]
@@ -709,11 +709,11 @@ class Agent:
         otp["tries"] = otp.get("tries", 0) + 1
         if otp["tries"] >= 3:
             self.store.save_state(sess["id"], {"welcomed": True})
-            return [self._handoff(sess, "falha na validação do código", "3 tentativas")]
+            return [self._handoff(sess, "falha na validaçêo do código", "3 tentativas")]
         self.store.save_state(sess["id"], state)
         return [OutMsg("Código incorreto. Tente de novo.", kind="service")]
 
-    # ---- execução ----
+    # ---- execuçêo ----
     def _execute(self, sess, svc: Service, state) -> list[OutMsg]:
         sid = sess["id"]
         ctx = self._ctx(sess, svc, state)
@@ -738,7 +738,7 @@ class Agent:
                 self.store.audit(session=sid, service=svc.service, version=svc.version, tool=svc.action.tool, args=args, ok=False, error=str(e)[:300])
                 self.store.event(sid, "service_failed", service=svc.service, error=str(e)[:300])
                 self.store.save_state(sid, {"welcomed": True, "service": None})
-                outs = [OutMsg(render(svc.on_failure.reply, ctx) or "Não consegui concluir.", kind="error")]
+                outs = [OutMsg(render(svc.on_failure.reply, ctx) or "Nêo consegui concluir.", kind="error")]
                 if svc.on_failure.handoff is not None:
                     outs.append(self._handoff(sess, f"falha em {svc.service}: {str(e)[:80]}", ""))
                 return outs

@@ -1,7 +1,7 @@
 """Agenda.
 
-- `local` (padrão, zero configuração): horários comerciais + SQLite + convite .ics por e-mail.
-- `calcom` (opcional/experimental): usa a API do Cal.com — exige `CALCOM_API_KEY` e autorização.
+- `local` (padrêo, zero configuraçêo): horários comerciais + SQLite + convite .ics por e-mail.
+- `calcom` (opcional/experimental): usa a API do Cal.com — exige `CALCOM_API_KEY` e autorizaçêo.
 """
 
 from __future__ import annotations
@@ -46,7 +46,7 @@ def is_free(cfg, store, start: datetime) -> tuple[bool, str]:
     if not (rng[0] <= mins and mins + cfg.agenda.slot_minutes <= rng[1]):
         return False, "fora do horário de atendimento"
     if (mins - rng[0]) % cfg.agenda.slot_minutes:
-        return False, f"os horários são de {cfg.agenda.slot_minutes} em {cfg.agenda.slot_minutes} minutos"
+        return False, f"os horários sêo de {cfg.agenda.slot_minutes} em {cfg.agenda.slot_minutes} minutos"
     if start < now() + timedelta(hours=cfg.agenda.min_lead_hours):
         return False, "precisa ser com mais antecedência"
     if start.strftime("%Y-%m-%dT%H:%M") in _busy(store):
@@ -130,11 +130,11 @@ def criar_evento(ctx, title: str, start: str, notes: str = "", phone: str = "", 
     return {"id": aid, "start": start, "end": end, "emails": len(sent)}
 
 
-# ---------- Cal.com (experimental; exige CALCOM_API_KEY e autorização de uso da API) ----------
+# ---------- Cal.com (experimental; exige CALCOM_API_KEY e autorizaçêo de uso da API) ----------
 def _calcom_headers():
     key = os.environ.get("CALCOM_API_KEY")
     if not key:
-        raise RuntimeError("CALCOM_API_KEY não definido")
+        raise RuntimeError("CALCOM_API_KEY nêo definido")
     return {"Authorization": f"Bearer {key}", "cal-api-version": "2024-09-04"}
 
 

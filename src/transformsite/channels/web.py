@@ -3,10 +3,10 @@
     <script src="https://SEU-SERVIDOR/widget.js" defer></script>
 
 - `POST /api/web/message` {session, text, choice, id?} → {session, messages: [{text, choices, citations, kind}]}
-- `GET  /api/web/poll?session=...` → respostas humanas (painel) pendentes para essa sessão
-- `GET  /widget.js` → JS vanilla autocontido (botão flutuante + painel; nunca usa innerHTML com texto do bot)
+- `GET  /api/web/poll?session=...` → respostas humanas (painel) pendentes para essa sessêo
+- `GET  /widget.js` → JS vanilla autocontido (botêo flutuante + painel; nunca usa innerHTML com texto do bot)
 - `GET  /chat` → página demo com o widget
-CORS: `channels.web.allowed_origins` (lista; padrão ["*"]).
+CORS: `channels.web.allowed_origins` (lista; padrêo ["*"]).
 """
 
 from __future__ import annotations
@@ -66,11 +66,11 @@ class WebChannel(Channel):
         return text
 
     def send(self, user_id: str, out: OutMsg) -> None:
-        """Sem conexão aberta com o navegador: enfileira; o widget busca em /api/web/poll."""
+        """Sem conexêo aberta com o navegador: enfileira; o widget busca em /api/web/poll."""
         with self._lock:
             q = self._pending.setdefault(user_id, deque(maxlen=50))
             q.extend(self.to_payloads(user_id, out))
-            if len(self._pending) > 10000:  # sessões abandonadas não crescem para sempre
+            if len(self._pending) > 10000:  # sessões abandonadas nêo crescem para sempre
                 self._pending.pop(next(iter(self._pending)))
 
     def drain(self, user_id: str) -> list[dict]:
@@ -123,7 +123,7 @@ class WebChannel(Channel):
         @r.get("/api/web/poll")
         def web_poll(session: str, request: Request):
             if not SESSION_RE.match(session):
-                raise HTTPException(400, "sessão inválida")
+                raise HTTPException(400, "sessêo inválida")
             return JSONResponse({"session": session, "messages": self.drain(session)}, headers=self._cors(request.headers.get("origin")))
 
         @r.get("/widget.js")
@@ -144,9 +144,9 @@ DEMO_HTML = """<!doctype html>
 <style>body{font-family:system-ui,sans-serif;max-width:720px;margin:40px auto;padding:0 16px;color:#222;background:#fafafa}</style>
 </head><body>
 <h1>{{title}}</h1>
-<p>Página de demonstração. Para usar no seu site, inclua:</p>
+<p>Página de demonstraçêo. Para usar no seu site, inclua:</p>
 <pre>&lt;script src="ENDERECO_DO_SERVIDOR/widget.js" defer&gt;&lt;/script&gt;</pre>
-<p>O botão de conversa fica no canto inferior direito.</p>
+<p>O botêo de conversa fica no canto inferior direito.</p>
 <script src="/widget.js" defer></script>
 </body></html>
 """
@@ -240,7 +240,7 @@ WIDGET_JS = r"""(function () {
       body: JSON.stringify({session: session, text: text, choice: choice || null, id: rid()})
     }).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then(function (d) { remember(d.session); (d.messages || []).forEach(addBot); })
-      .catch(function () { addBot({text: "Não consegui enviar agora. Tente de novo em instantes."}); })
+      .catch(function () { addBot({text: "Nêo consegui enviar agora. Tente de novo em instantes."}); })
       .then(function () { busy = false; input.focus(); });
   }
   function poll() {

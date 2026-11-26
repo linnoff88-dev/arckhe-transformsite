@@ -157,7 +157,7 @@ class Index:
         return [(ids[i], float(sims[i])) for i in top]
 
     def search(self, query: str, qemb: list[float] | None = None, k: int = 6) -> list[Hit]:
-        """Fusão por Reciprocal Rank Fusion (BM25 + vetor)."""
+        """Fusêo por Reciprocal Rank Fusion (BM25 + vetor)."""
         lists = [self.bm25(query, 30)]
         vec = self.vector(qemb, 30) if qemb is not None else []
         if vec:
@@ -182,7 +182,7 @@ class Index:
         return self._expand_top(out, k)
 
     def _expand_top(self, out: list[Hit], k: int, max_page_chunks: int = 8, extra: int = 4) -> list[Hit]:
-        """Se a página do 1º resultado é curta, traz os demais trechos dela (ex.: seção "Para quem é")."""
+        """Se a página do 1º resultado é curta, traz os demais trechos dela (ex.: seçêo "Para quem é")."""
         if not out:
             return out
         url = out[0].url

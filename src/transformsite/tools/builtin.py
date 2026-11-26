@@ -1,4 +1,4 @@
-"""Ferramentas padrão: tickets (crm), e-mail, webhook e POST em formulário legado."""
+"""Ferramentas padrêo: tickets (crm), e-mail, webhook e POST em formulário legado."""
 
 from __future__ import annotations
 

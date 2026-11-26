@@ -1,9 +1,9 @@
 """Painel admin (FastAPI + Jinja2, server-rendered). Escopo travado em 5 telas:
 Conversas · Fila · Serviços · Base de conhecimento · Métricas.
 
-Auth: token em `os.environ[cfg.admin_token_env]`, via login (cookie de sessão do painel) ou
+Auth: token em `os.environ[cfg.admin_token_env]`, via login (cookie de sessêo do painel) ou
 `Authorization: Bearer <token>`. Sem token configurado o painel só aceita 127.0.0.1 e avisa.
-CSRF: todo POST com cookie exige o campo `csrf` da sessão do painel (Bearer dispensa: não é cookie).
+CSRF: todo POST com cookie exige o campo `csrf` da sessêo do painel (Bearer dispensa: nêo é cookie).
 """
 
 from __future__ import annotations
@@ -86,12 +86,12 @@ class Panel:
             raise HTTPException(401, "token inválido")
         host = request.client.host if request.client else ""
         if not tok and host not in LOCAL_HOSTS:
-            raise HTTPException(403, f"{self.cfg.admin_token_env} não definido (ou valor de exemplo): painel só aceita acesso local")
+            raise HTTPException(403, f"{self.cfg.admin_token_env} nêo definido (ou valor de exemplo): painel só aceita acesso local")
         c = request.cookies.get(COOKIE, "")
         s = self.sessions.get(c)
         if s and s["exp"] > time.time():
             return {"bearer": False, "csrf": s["csrf"]}
-        if not tok:  # modo local sem token: abre sessão automaticamente
+        if not tok:  # modo local sem token: abre sessêo automaticamente
             c, s = self.new_session()
             return {"bearer": False, "csrf": s["csrf"], "new_cookie": c}
         raise HTTPException(303, headers={"Location": "/admin/login"})
@@ -126,7 +126,7 @@ class Panel:
             raise HTTPException(400, "nome de arquivo inválido")
         p = self.cfg.services_dir / fname
         if not p.is_file():
-            raise HTTPException(404, "serviço não encontrado")
+            raise HTTPException(404, "serviço nêo encontrado")
         return p
 
     # ---------- KB ----------
@@ -221,7 +221,7 @@ def mount_admin(app: FastAPI, cfg: ProjectConfig, agent) -> Panel:
     def conversa(request: Request, sid: str, a: dict = Depends(auth)):
         sess = store.get_session(sid)
         if not sess:
-            raise HTTPException(404, "conversa não encontrada")
+            raise HTTPException(404, "conversa nêo encontrada")
         msgs = store.messages(sid, 300)
         for m in msgs:
             m["data"] = json.loads(m.get("data") or "{}")
@@ -237,7 +237,7 @@ def mount_admin(app: FastAPI, cfg: ProjectConfig, agent) -> Panel:
     def assumir(sid: str, f: dict = Depends(post)):
         _need(store, sid)
         agent.takeover(sid)
-        return _go(f"/admin/conversas/{sid}", "Conversa assumida: o bot está em silêncio nesta sessão.")
+        return _go(f"/admin/conversas/{sid}", "Conversa assumida: o bot está em silêncio nesta sessêo.")
 
     @r.post("/conversas/{sid}/devolver")
     def devolver(sid: str, f: dict = Depends(post)):
@@ -270,9 +270,9 @@ def mount_admin(app: FastAPI, cfg: ProjectConfig, agent) -> Panel:
             raise HTTPException(400, "msg_id inválido")
         m = next((x for x in store.messages(sid, 1000) if x["id"] == mid and x["direction"] == "out"), None)
         if m is None:
-            raise HTTPException(404, "mensagem não encontrada")
+            raise HTTPException(404, "mensagem nêo encontrada")
         cits = json.loads(m.get("data") or "{}").get("citations") or []
-        fontes = "\n".join(f"[{c.get('n')}] {c.get('url')}" for c in cits) or "(sem citação)"
+        fontes = "\n".join(f"[{c.get('n')}] {c.get('url')}" for c in cits) or "(sem citaçêo)"
         body = f"Resposta do bot:\n{m['text']}\n\nFontes usadas:\n{fontes}\n\nNota: {f.get('note', '')}".strip()
         tid = store.ticket(sid, "qualidade", "erro", f"Resposta errada (msg {mid})", body, {"message_id": mid, "citations": cits})
         store.event(sid, "reported_wrong", message=mid, ticket=tid)
@@ -317,7 +317,7 @@ def mount_admin(app: FastAPI, cfg: ProjectConfig, agent) -> Panel:
         except ServiceError as e:
             errs = [str(e)]
         if errs:
-            return _go("/admin/servicos", f"{fname} não aprovado: corrija antes — {'; '.join(errs)[:300]}")
+            return _go("/admin/servicos", f"{fname} nêo aprovado: corrija antes — {'; '.join(errs)[:300]}")
         p.write_text(approve_text(p.read_text(encoding="utf-8")), encoding="utf-8")
         panel.reload_services()
         return _go("/admin/servicos", f"{fname} aprovado e serviços recarregados.")
@@ -341,7 +341,7 @@ def mount_admin(app: FastAPI, cfg: ProjectConfig, agent) -> Panel:
     @r.post("/kb/reingerir")
     def reingerir(f: dict = Depends(post)):
         ok = panel.run_ingest()
-        return _go("/admin/kb", "Re-ingestão iniciada." if ok else "Já há uma ingestão em andamento.")
+        return _go("/admin/kb", "Re-ingestêo iniciada." if ok else "Já há uma ingestêo em andamento.")
 
     # ---------- (e) Métricas ----------
     def _dias(dias: int) -> int:
@@ -369,4 +369,4 @@ def mount_admin(app: FastAPI, cfg: ProjectConfig, agent) -> Panel:
 
 def _need(store, sid: str) -> None:
     if not store.get_session(sid):
-        raise HTTPException(404, "conversa não encontrada")
+        raise HTTPException(404, "conversa nêo encontrada")

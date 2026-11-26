@@ -4,9 +4,9 @@ Todo canal implementa a mesma interface (`Channel`), o que permite rodar os MESM
 em todos eles (conformance) usando payloads nativos simulados — sem rede.
 
 - `to_inbound(payload)`      payload nativo recebido (webhook/update) → InMsg (ou None p/ ignorar)
-- `to_payloads(user, out)`   OutMsg → lista de payloads nativos de envio (degradação de botões)
+- `to_payloads(user, out)`   OutMsg → lista de payloads nativos de envio (degradaçêo de botões)
 - `send(user, out)`          envia de verdade (rede)
-- `native_inbound(...)`      constrói um payload nativo fake (simulação/testes)
+- `native_inbound(...)`      constrói um payload nativo fake (simulaçêo/testes)
 - `payload_text(payload)`    texto visível de um payload de envio (para asserções)
 """
 
@@ -36,7 +36,7 @@ class Channel:
     def payload_text(self, payload: dict) -> str:
         raise NotImplementedError
 
-    # ---- simulação ----
+    # ---- simulaçêo ----
     def exchange(self, agent, user_id, text, meta=None, choice=None, msg_id=None) -> list[str]:
         payload = self.native_inbound(user_id, text, meta or {}, choice, msg_id)
         msg = self.to_inbound(payload)

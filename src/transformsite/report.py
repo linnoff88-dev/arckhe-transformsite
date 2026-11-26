@@ -72,7 +72,7 @@ def _metrics(evs: list[dict], erradas: int) -> dict:
 
 
 def _abandono(evs: list[dict], store: Store) -> dict[str, int]:
-    """Slot onde parou cada serviço iniciado e não concluído (chave 'servico:slot')."""
+    """Slot onde parou cada serviço iniciado e nêo concluído (chave 'servico:slot')."""
     runs: dict[tuple[str, str], dict] = {}
     for e in evs:  # em ordem de id
         sid, d = e["session_id"], e["data"]

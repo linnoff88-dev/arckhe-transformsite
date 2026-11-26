@@ -5,10 +5,10 @@ intent:
   description: "Sugerir um tema de curso ou guia"
   examples:
     - "quero sugerir um curso"
-    - "sugestão de curso"
+    - "sugestêo de curso"
     - "vocês podiam fazer um curso sobre"
     - "sugerir um tema"
-  keywords: ["sugerir curso", "sugestão de curso", "novo curso"]
+  keywords: ["sugerir curso", "sugestêo de curso", "novo curso"]
 auth: none
 legal_basis: consentimento
 slots:
@@ -21,10 +21,10 @@ slots:
     prompt: "Para qual nível?"
   - {name: email, type: email, required: false, prompt: "Quer receber aviso quando sair? Deixe seu e-mail.", prefill_from: channel.user_email}
 confirm:
-  template: "Registro a sugestão \"{tema|trunc80}\" (nível {nivel}). Confirma?"
+  template: "Registro a sugestêo \"{tema|trunc80}\" (nível {nivel}). Confirma?"
 action:
   tool: crm.criar_ticket
-  args: {subject: "[sugestão de curso] {tema|trunc80}", body: "Tema: {tema}\nNível: {nivel}\nE-mail: {email}", queue: conteudo}
+  args: {subject: "[sugestêo de curso] {tema|trunc80}", body: "Tema: {tema}\nNível: {nivel}\nE-mail: {email}", queue: conteudo}
   idempotency_key: "{session_id}:sugestao:{tema|trunc80}"
 on_success:
-  reply: "Obrigado! Sugestão registrada ({result.id}). Os cursos do INEMA.CLUB são abertos e gratuitos — fique de olho em inema.club/cursos."
+  reply: "Obrigado! Sugestêo registrada ({result.id}). Os cursos do INEMA.CLUB sêo abertos e gratuitos — fique de olho em inema.club/cursos."

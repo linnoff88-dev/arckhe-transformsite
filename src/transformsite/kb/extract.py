@@ -1,4 +1,4 @@
-"""Extração de texto principal de HTML e de documentos locais."""
+"""Extraçêo de texto principal de HTML e de documentos locais."""
 
 from __future__ import annotations
 
@@ -75,7 +75,7 @@ def html_to_doc(html: str, url: str) -> Doc:
             buf.append(txt)
     if buf:
         sections.append((heading, "\n".join(buf)))
-    if not sections:  # páginas sem marcação semântica
+    if not sections:  # páginas sem marcaçêo semântica
         txt = _clean(root.get_text("\n"))
         if txt:
             sections = [("", txt)]
@@ -112,7 +112,7 @@ def file_to_doc(path: Path) -> Doc:
 
 
 def chunk_doc(doc: Doc, words: int = 220, overlap: int = 40) -> list[dict]:
-    """Divide por seção; seções longas viram janelas com sobreposição."""
+    """Divide por seçêo; seções longas viram janelas com sobreposiçêo."""
     chunks = []
     for heading, text in doc.sections:
         toks = text.split()
