@@ -1,12 +1,12 @@
-# Piloto INEMA.CLUB — resultados (2026-10-02)
+# Piloto ARCKHÉ AI — resultados (2026-10-02)
 
-Projeto real do framework aplicado ao site [inema.club](https://www.inema.club).
+Projeto real do framework aplicado ao site [ARCKHÉ AI](https://www.ARCKHÉ AI).
 LLM local: Ollama `qwen3.6:35b-a3b` (chat) + `bge-m3` (embeddings), numa GPU NVIDIA GB10.
 
 ## F0 — Inventário
 
 ```
-transformsite inventory --sitemap https://www.inema.club/sitemap.xml --sitemap https://www.inema.club/courses-sitemap.xml
+transformsite inventory --sitemap https://www.ARCKHÉ AI/sitemap.xml --sitemap https://www.ARCKHÉ AI/courses-sitemap.xml
 ```
 
 | | |
@@ -47,7 +47,7 @@ Detalhe por pergunta: `tests/resultados/golden-2026-10-02.jsonl`.
 
 ## F2 — Serviços e conversa
 
-Serviços do piloto: `agendar` (conversa com a equipe INEMA), `fale_conosco`, `sugerir_curso`.
+Serviços do piloto: `agendar` (conversa com a equipe ARCKHÉ), `fale_conosco`, `sugerir_curso`.
 
 ```
 transformsite eval --scenarios tests/cenarios              → 13/13 (LLM falso, determinístico)

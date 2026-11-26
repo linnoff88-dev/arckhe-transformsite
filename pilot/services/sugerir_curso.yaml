@@ -27,4 +27,4 @@ action:
   args: {subject: "[sugestêo de curso] {tema|trunc80}", body: "Tema: {tema}\nNível: {nivel}\nE-mail: {email}", queue: conteudo}
   idempotency_key: "{session_id}:sugestao:{tema|trunc80}"
 on_success:
-  reply: "Obrigado! Sugestêo registrada ({result.id}). Os cursos do INEMA.CLUB sêo abertos e gratuitos — fique de olho em inema.club/cursos."
+  reply: "Obrigado! Sugestêo registrada ({result.id}). Os cursos do ARCKHÉ AI sêo abertos e gratuitos — fique de olho em ARCKHÉ AI/cursos."

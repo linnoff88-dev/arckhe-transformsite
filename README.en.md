@@ -1,6 +1,6 @@
 # transformsite
 
-[![transformsite — your site becomes chat](guia/assets/banner-en.jpg)](https://inematds.github.io/transformsite/guia/en/)
+[![transformsite — your site becomes chat](guia/assets/banner-en.jpg)](https://linnoff88-dev.github.io/arckhe-/guia/en/)
 
 **🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
 
@@ -11,7 +11,7 @@ The agent **answers citing the source** (or says "I don't know" and hands over t
 
 ## 📖 User guide
 
-Full guide (landing + step by step): **https://inematds.github.io/transformsite/guia/en/** · 🗺️ [Roadmap](ROADMAP.md) (in Portuguese)
+Full guide (landing + step by step): **https://linnoff88-dev.github.io/arckhe-/guia/en/** · 🗺️ [Roadmap](ROADMAP.md) (in Portuguese)
 
 > Inspiration: **America.gov** (2026) brought the content of ~29 thousand US government sites into a single
 > conversational entry point — first questions with sources, then transactions. transformsite is the open,
@@ -37,7 +37,7 @@ legacy forms ──convert──► services/*.yaml ──► slot machine ─�
 ## Quick install (5 minutes)
 
 ```bash
-pipx install git+https://github.com/inematds/transformsite      # or: pip install .
+pipx install git+https://github.com/linnoff88-dev/transformsite      # or: pip install .
 ollama pull qwen3.6:35b-a3b && ollama pull bge-m3                # any instruct model works (e.g. qwen2.5:7b)
 
 transformsite init meubot --org "Minha Empresa" --url https://www.minhaempresa.com.br --contact atendimento@minhaempresa.com.br
@@ -111,17 +111,17 @@ Human handoff: `handoff.targets` (`panel`, `email:...`, `telegram:<chat_id>`). I
 ## Deploy on a VPS
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/inematds/transformsite/main/deploy/vps/install.sh | sudo bash -s -- \
+curl -fsSL https://raw.githubusercontent.com/linnoff88-dev/transformsite/main/deploy/vps/install.sh | sudo bash -s -- \
   --domain bot.suaempresa.com.br --site https://www.suaempresa.com.br --org "Sua Empresa" --contact atendimento@suaempresa.com.br --whatsapp
 ```
 
 Comes up with Docker Compose: **app + Ollama + Evolution API (WhatsApp) + Caddy (automatic HTTPS)**. Details in
 [`deploy/vps/README.md`](deploy/vps/README.md) (in Portuguese).
 
-## Pilot: INEMA.CLUB
+## Pilot: ARCKHÉ AI
 
 The [`pilot/`](pilot/) folder is the real project used to validate the framework with the site
-[inema.club](https://www.inema.club): 386 pages → 1,512 chunks; with 73 test questions and a local LLM,
+[ARCKHÉ AI](https://www.ARCKHÉ AI): 386 pages → 1,512 chunks; with 73 test questions and a local LLM,
 **92.6%** of answers with a valid source, **100%** "I don't know" out of scope, **100%** injection
 blocked, p95 of 2.6 s; **13/13** conversation scripts. Details in [`pilot/RESULTADOS.md`](pilot/RESULTADOS.md) (in Portuguese).
 
@@ -132,4 +132,4 @@ uv venv && uv pip install -e '.[dev]'
 pytest -q                       # no network, deterministic fake LLM
 ```
 
-MIT License · made by [INEMA](https://www.inema.club) — open and free content.
+MIT License · made by [ARCKHÉ](https://www.ARCKHÉ AI) — open and free content.

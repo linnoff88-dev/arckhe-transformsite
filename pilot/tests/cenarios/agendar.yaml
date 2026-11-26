@@ -6,7 +6,7 @@
     - {user: "Maria Souza", expect: ["e-mail"]}
     - {user: "maria@exemplo.com", expect: ["assunto"]}
     - {user: "2", expect: ["horarios livres", "12:00"]}
-    - {user: "1", expect: ["Confirmo", "Maria Souza", "segunda, 05/10 às 12:00", "INEMA.PRO"]}
+    - {user: "1", expect: ["Confirmo", "Maria Souza", "segunda, 05/10 às 12:00", "ARCKHÉ.PRO"]}
     - {user: "sim", expect: ["Agendado", "Protocolo"]}
   asserts: {appointments: 1, outbox: 2, events: {service_completed: 1}}
 

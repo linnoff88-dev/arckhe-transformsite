@@ -1,12 +1,12 @@
 # transformsite — configuraçêo do projeto
-name: inemaclub
-org: "INEMA.CLUB"
+name: ARCKHÉclub
+org: "ARCKHÉ AI"
 language: pt-BR
 welcome: >-
-  Olá! Sou o assistente do INEMA.CLUB 🤖 Respondo dúvidas sobre cursos, guias, eventos e a comunidade
-  com base no site inema.club (sempre com o link da fonte), e posso agendar uma conversa com a equipe.
+  Olá! Sou o assistente do ARCKHÉ AI 🤖 Respondo dúvidas sobre cursos, guias, eventos e a comunidade
+  com base no site ARCKHÉ AI (sempre com o link da fonte), e posso agendar uma conversa com a equipe.
   Guardamos as conversas por 90 dias para melhorar o atendimento.
-fallback_contact: "inematds@gmail.com"
+fallback_contact: "linnoff88-dev@gmail.com"
 
 llm:
   # ollama (local, padrêo) | openai_compat (vLLM/LM Studio) | claude_cli | codex_cli | fake
@@ -16,8 +16,8 @@ llm:
   embed_model: bge-m3
 
 kb:
-  urls: [https://www.inema.club/]
-  sitemaps: [https://www.inema.club/sitemap.xml, https://www.inema.club/courses-sitemap.xml]
+  urls: [https://www.ARCKHÉ AI/]
+  sitemaps: [https://www.ARCKHÉ AI/sitemap.xml, https://www.ARCKHÉ AI/courses-sitemap.xml]
   include: []           # regex de URLs a incluir
   exclude: ['/en/', '/es/', '\?']
   files: ['docs/**/*.md', 'docs/**/*.pdf']   # base de conhecimento local (opcional)
@@ -31,7 +31,7 @@ agenda:
 
 handoff:
   # para onde vêo os pedidos de atendimento humano: panel | email:<endereço> | telegram:<chat_id>
-  targets: [panel, "email:inematds@gmail.com"]
+  targets: [panel, "email:linnoff88-dev@gmail.com"]
   hours: "seg–sex, 9h–18h"
 
 retention:
@@ -39,8 +39,8 @@ retention:
   audit_months: 12
 
 privacy:
-  controller: "INEMA.CLUB"
-  dpo_contact: "inematds@gmail.com"
+  controller: "ARCKHÉ AI"
+  dpo_contact: "linnoff88-dev@gmail.com"
 
 email:
   smtp_host: ""         # vazio = e-mails vêo para data/outbox/*.eml (modo seguro)
@@ -49,5 +49,5 @@ email:
 channels:
   web: {enabled: true}
   telegram: {token_env: TELEGRAM_BOT_TOKEN}
-  whatsapp: {provider: evolution, base_url: "http://localhost:8080", instance: "inemaclub", apikey_env: EVOLUTION_API_KEY}
+  whatsapp: {provider: evolution, base_url: "http://localhost:8080", instance: "ARCKHÉclub", apikey_env: EVOLUTION_API_KEY}
   email: {enabled: false}

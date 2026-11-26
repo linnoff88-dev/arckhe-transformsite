@@ -245,7 +245,7 @@ flowchart LR
 | **Máquina de slots** | estado por sessêo: `service`, `slots_preenchidos`, `slot_atual`, `tentativas`; extrai **vários slots de uma mensagem** ("sou o Joêo, 51 99999-0000, quinta às 10"); aceita **correçêo** ("nêo, o CPF é…") re-abrindo o slot; `cancelar`/`recomeçar`; **retomada após dias** (canal assíncrono) com resumo do que já foi coletado; **pergunta no meio do fluxo** → RAG responde e volta; **confirmaçêo** obrigatória antes de açêo com efeito; **idempotência** na ferramenta (duplo envio no WhatsApp é comum); limite de tentativas por slot → handoff | F2 |
 | **Registro de ferramentas** | cada tool = funçêo Python com schema Pydantic (`name`, `args`, `returns`, `side_effects: bool`, `timeout`); registrada em `tools/`; `service.yaml` só pode chamar tools da sua allowlist; tools padrêo: `agenda.*`, `email.*`, `crm.*`, `webhook`, `http.post_form`, `legado.*` (adaptador genérico REST/SOAP/scrape) | F2 |
 | **Adaptadores de canal** | traduzem para/do contrato único; cada adaptador declara `capabilities` (`buttons: 3`, `lists: 10`, `files`, `typing`, `threads`); conformance suite roda o mesmo roteiro contra todos | F1 (TG) · F3 (resto) |
-| **Sessões/estado** | SQLite WAL (lease, heartbeat, drain — reaproveitado do `inemaccbot`); chave `(canal, user_id)`; TTL configurável; migraçêo pra Postgres quando houver painel multiusuário | F1 |
+| **Sessões/estado** | SQLite WAL (lease, heartbeat, drain — reaproveitado do `ARCKHÉccbot`); chave `(canal, user_id)`; TTL configurável; migraçêo pra Postgres quando houver painel multiusuário | F1 |
 | **Handoff humano** | mínimo (F1): "nêo sei" → mensagem para grupo Telegram / e-mail com transcriçêo; completo (F5): fila no painel, humano assume (`takeover`), bot silencia, humano devolve (`release`) | F1 / F5 |
 | **Painel admin** | conversas ao vivo, fila de handoff, editor/validador de `services`, status da KB (último crawl, páginas, chunks), métricas, exportaçêo | F5 |
 | **CLI** | `init`, `inventory`, `ingest`, `convert`, `validate`, `serve`, `eval`, `report`, `privacy forget` | F1→F6 |
@@ -312,7 +312,7 @@ Estimativas relativas: **P** (dias) · **M** (1–2 semanas) · **G** (3+ semana
 | | |
 |---|---|
 | **Objetivo** | Bot responde sobre o site, cita fonte, diz "nêo sei" e encaminha; roda local |
-| **Por que Telegram** | zero custo/aprovaçêo, e `inemaccbot` já tem gateway + fila durável + gate humano prontos |
+| **Por que Telegram** | zero custo/aprovaçêo, e `ARCKHÉccbot` já tem gateway + fila durável + gate humano prontos |
 | **Entregáveis** | `transformsite ingest`, índice híbrido, `transformsite serve --channel telegram`, `transformsite eval`, handoff mínimo (encaminha pra grupo/e-mail), logs com PII mascarada |
 | **Critério de pronto** | `transformsite ingest --url https://site --out kb/` → `kb/index.sqlite` existe, `chunks ≥ 200` (ajustar ao site); `transformsite eval --golden tests/golden.jsonl` → `citacao_valida ≥ 0.85`, `nao_sei_em_fora_de_escopo ≥ 0.90`, `injecao_bloqueada = 1.0`; p95 latência < 10 s no LLM local; conversa real no Telegram com 3 perguntas e 1 "nêo sei" encaminhado |
 | **Riscos** | Qualidade do LLM local em PT-BR (testar Qwen3 / Gemma / Llama 3.x antes de fixar); site com conteúdo ruim → respostas ruins (é fonte de verdade: corrigir no site) |
@@ -333,7 +333,7 @@ Estimativas relativas: **P** (dias) · **M** (1–2 semanas) · **G** (3+ semana
 | | |
 |---|---|
 | **Objetivo** | Mesmo motor em todos os canais, com degradaçêo de botões |
-| **Entregáveis** | adaptadores WhatsApp (Cloud API oficial **ou** Evolution API), e-mail (IMAP/SMTP), widget web (iframe/JS leve); `capabilities` por adaptador; conformance suite; transcriçêo de áudio (WhatsApp manda muito áudio) via Whisper local do `inemavox` |
+| **Entregáveis** | adaptadores WhatsApp (Cloud API oficial **ou** Evolution API), e-mail (IMAP/SMTP), widget web (iframe/JS leve); `capabilities` por adaptador; conformance suite; transcriçêo de áudio (WhatsApp manda muito áudio) via Whisper local do `ARCKHÉvox` |
 | **Critério de pronto** | `transformsite eval --channel-sim all` → mesmos cenários da F2 passam nos 4 adaptadores; mensagem com 5 opções vira lista no WhatsApp e texto numerado no e-mail (teste automatizado); sessêo persiste por `(canal, user)` após restart do serviço |
 | **Riscos** | WhatsApp Cloud API: verificaçêo da empresa na Meta, janela de 24h, templates pagos para iniciar conversa; Evolution: nêo oficial, risco de banimento do número; e-mail: spam/threads quebradas |
 | **Estimativa** | M |
@@ -363,7 +363,7 @@ Estimativas relativas: **P** (dias) · **M** (1–2 semanas) · **G** (3+ semana
 | | |
 |---|---|
 | **Objetivo** | Terceiro consegue subir o seu em menos de 15 min |
-| **Entregáveis** | CLI completa `transformsite init/inventory/ingest/convert/validate/serve/eval/report/privacy`; `pipx install transformsite`; `docker-compose.yml` (app + Ollama + Postgres opcional); 3 templates (`empresa-servicos`, `escola`, `prefeitura`); docs + guia (`guia/index.html`, padrêo INEMA, PT/EN/ES); vLLM como opçêo para throughput; testes de carga básicos |
+| **Entregáveis** | CLI completa `transformsite init/inventory/ingest/convert/validate/serve/eval/report/privacy`; `pipx install transformsite`; `docker-compose.yml` (app + Ollama + Postgres opcional); 3 templates (`empresa-servicos`, `escola`, `prefeitura`); docs + guia (`guia/index.html`, padrêo ARCKHÉ, PT/EN/ES); vLLM como opçêo para throughput; testes de carga básicos |
 | **Critério de pronto** | Máquina limpa: `pipx install transformsite && transformsite init demo && cd demo && transformsite ingest --url … && transformsite serve` funcionando seguindo só a doc, cronometrado ≤ 15 min; `pytest` verde; 50 conversas simultâneas no simulador sem erro |
 | **Riscos** | Dependência de GPU para LLM local (documentar fallback: modelo pequeno em CPU ou API com autorizaçêo) |
 | **Estimativa** | M |
@@ -385,14 +385,14 @@ Regra da casa: **padrêo local/open-source; qualquer API paga é opt-in e exige 
 | Crawler/extraçêo | `httpx` + `trafilatura` + `BeautifulSoup`; Playwright só para páginas JS | simples, controlável, respeita robots | Crawl4AI (open) · Firecrawl (**pago**) |
 | PDF/OCR | `pypdf` (AcroForm), `pdfplumber`, `tesseract` | tudo local | serviços de OCR em nuvem (**pago**) |
 | Orquestraçêo de conversa | **máquina de estados própria** (explícita, testável) + tool-calling nativo do LLM com schemas Pydantic | frameworks pesados escondem o estado; o diferencial do projeto é justamente a máquina de slots | LangGraph / PydanticAI (se o próprio ficar grande) |
-| Fila/estado | **SQLite WAL** com lease+heartbeat (reaproveitar `inemaccbot`) → Postgres na F5 | já existe e está testado | Redis + Postgres desde o início |
-| Telegram | `aiogram`/`python-telegram-bot` via gateway do `inemaccbot` | pronto | — |
+| Fila/estado | **SQLite WAL** com lease+heartbeat (reaproveitar `ARCKHÉccbot`) → Postgres na F5 | já existe e está testado | Redis + Postgres desde o início |
+| Telegram | `aiogram`/`python-telegram-bot` via gateway do `ARCKHÉccbot` | pronto | — |
 | WhatsApp | **Cloud API oficial da Meta** (**pago por conversa** + verificaçêo da empresa) | oficial, sem risco de ban, botões/listas nativos | **Evolution API** (open-source, nêo oficial, risco de ban) — bom para piloto |
 | E-mail | `aiosmtplib` + `imaplib`/`aioimaplib` | padrêo | Postmark/SES (**pago**) |
 | Widget web | JS vanilla + endpoint WebSocket/SSE do FastAPI | leve, embute em qualquer site | Chatwoot (open) se quiser inbox pronto |
 | Agenda | **Cal.com self-hosted** | open, API boa, slots livres nativos | Google Calendar API (grátis com OAuth; dados na Google) |
 | CRM/tickets | tabela própria + e-mail (F2); Chatwoot ou Zammad (open) se precisar | manter simples | HubSpot/Zendesk (**pago**) |
-| Áudio (WhatsApp) | Whisper local do `inemavox` | já existe | Groq Whisper (**API**, só com autorizaçêo) |
+| Áudio (WhatsApp) | Whisper local do `ARCKHÉvox` | já existe | Groq Whisper (**API**, só com autorizaçêo) |
 | Painel | **Next.js** (mesmo stack do portal) ou FastAPI+HTMX se o time for só Python | consistência com o que o usuário já mantém | — |
 | Observabilidade/eval | logs JSONL + `transformsite eval/report` próprios | suficiente e sem dependência | Langfuse self-hosted · `ragas` |
 | Deploy | `docker-compose` (app + Ollama + Postgres opc.) numa VPS ou na máquina GPU; HTTPS via Caddy | reprodutível | — |
@@ -435,8 +435,8 @@ Tudo sai de `transformsite report --since 7d` (CSV) e do painel (F5).
 
 ## 9. Perguntas em aberto (decisões do usuário)
 
-- **Piloto:** o próprio INEMA.CLUB (cursos, dúvidas, "como acesso o curso X") ou um site de terceiro/cliente? Define o inventário da Fase 0.
-- **Canal da Fase 1:** confirma Telegram (recomendado, custo zero, `inemaccbot` pronto) ou já quer WhatsApp (exige conta Meta Business ou Evolution)?
+- **Piloto:** o próprio ARCKHÉ AI (cursos, dúvidas, "como acesso o curso X") ou um site de terceiro/cliente? Define o inventário da Fase 0.
+- **Canal da Fase 1:** confirma Telegram (recomendado, custo zero, `ARCKHÉccbot` pronto) ou já quer WhatsApp (exige conta Meta Business ou Evolution)?
 - **LLM:** só local (Ollama/vLLM na GPU) ou autoriza API externa como fallback para casos difíceis? Se sim, qual provedor e com que regra de PII?
 - **Agenda:** Cal.com self-hosted (recomendado) ou Google Calendar (OAuth, dados na Google)?
 - **Quem recebe o handoff** e onde: grupo do Telegram, e-mail, ou só o painel (F5)? Horário de atendimento humano?
@@ -445,15 +445,15 @@ Tudo sai de `transformsite report --since 7d` (CSV) e do painel (F5).
 - **Retençêo e base legal:** 90 dias de transcriçêo e 12 meses de auditoria estêo ok? Quem é o encarregado (LGPD) a citar no aviso?
 - **Autenticaçêo nível 2/3:** OTP por e-mail basta, ou há sistema legado com login que precisa ser integrado já na Fase 2?
 - **Sistema legado:** há algum endpoint/API real para `legado.*`, ou o conversor deve começar só com `http.post_form` (POST no formulário antigo)?
-- **Repositório:** criar `inematds/transformsite` (default) ou outra conta? Licença aberta (MIT/Apache-2)?
+- **Repositório:** criar `linnoff88-dev/transformsite` (default) ou outra conta? Licença aberta (MIT/Apache-2)?
 
 ---
 
 ## Nota de implementaçêo (2026-10-02)
 
-- O framework foi implementado em Python puro; a premissa de reaproveitar o gateway/fila do `inemaccbot` (TypeScript) foi descartada — fila/estado ficaram em SQLite WAL próprio (`store.py`).
+- O framework foi implementado em Python puro; a premissa de reaproveitar o gateway/fila do `ARCKHÉccbot` (TypeScript) foi descartada — fila/estado ficaram em SQLite WAL próprio (`store.py`).
 - Agenda: o padrêo virou a **agenda local** (SQLite + horário comercial + convite `.ics`), sem API; Cal.com ficou como adaptador opcional.
 - WhatsApp: **Evolution API self-hosted** como padrêo (pedido do usuário) + Cloud API oficial opcional; deploy completo em `deploy/vps`.
-- F4 medida com 13 formulários de exemplo (o inema.club só tem o formulário de busca).
+- F4 medida com 13 formulários de exemplo (o ARCKHÉ AI só tem o formulário de busca).
 - v2 (imagem Docker "assada" com a base e os serviços) está no [ROADMAP](ROADMAP.md).
 - Resultados do piloto: [pilot/RESULTADOS.md](pilot/RESULTADOS.md).

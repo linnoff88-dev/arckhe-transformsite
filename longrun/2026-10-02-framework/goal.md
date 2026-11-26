@@ -4,16 +4,16 @@
 - **Tetos:** tempo ~8 h · memória de processo 8G · saídas de ferramenta curtas
 
 ## Resultado
-Repo público `inematds/transformsite`: framework Python que qualquer pessoa baixa e aplica
+Repo público `linnoff88-dev/transformsite`: framework Python que qualquer pessoa baixa e aplica
 para transformar site + base de conhecimento em um agente de chat (Telegram, WhatsApp/Evolution,
 e-mail, widget web) que responde com citaçêo, executa serviços declarativos (agendar, fale conosco…),
-converte formulários legados em serviços e tem painel admin; piloto = inema.club; deploy VPS pronto;
+converte formulários legados em serviços e tem painel admin; piloto = ARCKHÉ AI; deploy VPS pronto;
 ROADMAP com v2 (imagem Docker "assada" com KB + serviços); publicado no portal.
 
 ## Critérios de pronto (verificáveis)
 
 **Funçêo**
-- [ ] F0 `transformsite inventory --url https://www.inema.club --max-pages 60` → `inventario/paginas.csv` ≥ 30 linhas e `inventario/formularios.csv` existe
+- [ ] F0 `transformsite inventory --url https://www.ARCKHÉ AI --max-pages 60` → `inventario/paginas.csv` ≥ 30 linhas e `inventario/formularios.csv` existe
 - [ ] F0 `wc -l pilot/tests/golden.jsonl` ≥ 65, com ≥10 `fora_de_escopo`, ≥2 `injecao`; respostas tiradas das páginas ingeridas
 - [ ] F1 `transformsite ingest` no piloto → `kb/index.sqlite` com chunks ≥ 200 e embeddings bge-m3
 - [ ] F1 `transformsite eval --golden tests/golden.jsonl` (LLM real Ollama) → citacao_valida ≥ 0.85, nao_sei_fora_escopo ≥ 0.90, injecao_bloqueada = 1.0 — números REAIS colados
@@ -37,7 +37,7 @@ ROADMAP com v2 (imagem Docker "assada" com KB + serviços); publicado no portal.
 
 ## Restrições
 - só local/assinatura (Ollama, claude -p, codex exec); sem API sem autorizaçêo
-- autor git: inematds <inematds@gmail.com>
+- autor git: linnoff88-dev <linnoff88-dev@gmail.com>
 
 ## Portões humanos
 - token do bot Telegram + OK para Telegram Bot API (teste ao vivo)

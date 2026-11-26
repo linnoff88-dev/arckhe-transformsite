@@ -1,6 +1,6 @@
 ï»¿# transformsite
 
-[![transformsite ê¢â¬â seu site vira chat](guia/assets/banner.jpg)](https://inematds.github.io/transformsite/guia/)
+[![transformsite ê¢â¬â seu site vira chat](guia/assets/banner.jpg)](https://linnoff88-dev.github.io/arckhe-/guia/)
 
 **ê°Å¸â¡Â§ê°Å¸â¡Â· [PortuguêÂªs](README.md) êÂ· ê°Å¸â¡Âºê°Å¸â¡Â¸ [English](README.en.md) êÂ· ê°Å¸â¡Âªê°Å¸â¡Â¸ [EspaêÂ±ol](README.es.md)**
 
@@ -11,7 +11,7 @@ O agente **responde citando a fonte** (ou diz "nêÂ£o sei" e passa para a eq
 
 ## ê°Å¸ââ Guia de uso
 
-Guia completo (landing + passo a passo): **https://inematds.github.io/transformsite/guia/** êÂ· ê°Å¸âÂºê¯Â¸Â [Roadmap](ROADMAP.md)
+Guia completo (landing + passo a passo): **https://linnoff88-dev.github.io/arckhe-/guia/** êÂ· ê°Å¸âÂºê¯Â¸Â [Roadmap](ROADMAP.md)
 
 > InspiraêÂ§êÂ£o: o **America.gov** (2026) juntou o conteêÂºdo de ~29 mil sites do governo americano num êÂºnico
 > ponto de entrada conversacional ê¢â¬â primeiro perguntas com fonte, depois transaêÂ§êÂµes. O transformsite êÂ© a
@@ -37,7 +37,7 @@ formulêÂ¡rios legados ê¢ââ¬ê¢ââ¬convertê¢ââ
 ## InstalaêÂ§êÂ£o rêÂ¡pida (5 minutos)
 
 ```bash
-pipx install git+https://github.com/inematds/transformsite      # ou: pip install .
+pipx install git+https://github.com/linnoff88-dev/transformsite      # ou: pip install .
 ollama pull qwen3.6:35b-a3b && ollama pull bge-m3                # qualquer modelo instruct serve (ex.: qwen2.5:7b)
 
 transformsite init meubot --org "Minha Empresa" --url https://www.minhaempresa.com.br --contact atendimento@minhaempresa.com.br
@@ -111,17 +111,17 @@ Handoff humano: `handoff.targets` (`panel`, `email:...`, `telegram:<chat_id>`). 
 ## Deploy numa VPS
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/inematds/transformsite/main/deploy/vps/install.sh | sudo bash -s -- \
+curl -fsSL https://raw.githubusercontent.com/linnoff88-dev/transformsite/main/deploy/vps/install.sh | sudo bash -s -- \
   --domain bot.suaempresa.com.br --site https://www.suaempresa.com.br --org "Sua Empresa" --contact atendimento@suaempresa.com.br --whatsapp
 ```
 
 Sobe com Docker Compose: **app + Ollama + Evolution API (WhatsApp) + Caddy (HTTPS automêÂ¡tico)**. Detalhes em
 [`deploy/vps/README.md`](deploy/vps/README.md).
 
-## Piloto: INEMA.CLUB
+## Piloto: ARCKHÉ AI
 
 A pasta [`pilot/`](pilot/) êÂ© o projeto real usado para validar o framework com o site
-[inema.club](https://www.inema.club): 386 pêÂ¡ginas ê¢â â 1.512 trechos; com 73 perguntas de teste e LLM local,
+[ARCKHÉ AI](https://www.ARCKHÉ AI): 386 pêÂ¡ginas ê¢â â 1.512 trechos; com 73 perguntas de teste e LLM local,
 **92,6%** de respostas com fonte vêÂ¡lida, **100%** de "nêÂ£o sei" fora do escopo, **100%** de injeêÂ§êÂ£o
 bloqueada, p95 de 2,6 s; **13/13** roteiros de conversa. Detalhes em [`pilot/RESULTADOS.md`](pilot/RESULTADOS.md).
 
@@ -132,7 +132,7 @@ uv venv && uv pip install -e '.[dev]'
 pytest -q                       # sem rede, LLM falso determinêÂ­stico
 ```
 
-LicenêÂ§a MIT êÂ· feito pelo [INEMA](https://www.inema.club) ê¢â¬â conteêÂºdo aberto e gratuito.
+LicenêÂ§a MIT êÂ· feito pelo [ARCKHÉ](https://www.ARCKHÉ AI) ê¢â¬â conteêÂºdo aberto e gratuito.
 
 ---
 

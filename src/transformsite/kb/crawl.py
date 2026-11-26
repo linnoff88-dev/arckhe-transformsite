@@ -13,7 +13,7 @@ from urllib.robotparser import RobotFileParser
 
 import httpx
 
-UA = "transformsite/0.1 (+https://github.com/inematds/transformsite)"
+UA = "transformsite/0.1 (+https://github.com/linnoff88-dev/transformsite)"
 SKIP_EXT = re.compile(r"\.(png|jpe?g|gif|webp|svg|ico|mp4|mp3|wav|zip|gz|css|js|woff2?|ttf|json|xml)(\?|$)", re.I)
 
 

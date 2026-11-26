@@ -6,9 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>transformsite — your site becomes a chat support agent</title>
 <meta name="description" content="Open framework that turns a company's site and knowledge base into a chat agent (WhatsApp, Telegram, email, web) that answers with sources and runs services such as scheduling. Local LLM.">
-<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/transformsite/guia/">
-<link rel="alternate" hreflang="en" href="https://inematds.github.io/transformsite/guia/en/">
-<link rel="alternate" hreflang="es" href="https://inematds.github.io/transformsite/guia/es/">
+<link rel="alternate" hreflang="pt-BR" href="https://linnoff88-dev.github.io/arckhe-/guia/">
+<link rel="alternate" hreflang="en" href="https://linnoff88-dev.github.io/arckhe-/guia/en/">
+<link rel="alternate" hreflang="es" href="https://linnoff88-dev.github.io/arckhe-/guia/es/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -40,8 +40,8 @@
   nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
   nav .brand .emoji{font-size:1.25rem}
   nav .sep{color:var(--mut);opacity:.45}
-  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
-  nav .inema:hover{filter:brightness(1.15)}
+  nav .ARCKHÉ{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .ARCKHÉ:hover{filter:brightness(1.15)}
   nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
   nav .pro:hover{filter:brightness(1.15)}
   nav .clubpro{display:inline-flex;align-items:center;gap:6px}
@@ -105,9 +105,9 @@
   <a class="brand" href="#top"><span class="emoji">💬</span> transformsite</a>
   <span class="sep">|</span>
   <span class="clubpro">
-    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <a class="ARCKHÉ" href="https://ARCKHÉ AI" target="_blank" rel="noopener">ARCKHÉ AI</a>
     <span class="sep">-</span>
-    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+    <a class="pro" href="https://ARCKHÉ.pro" target="_blank" rel="noopener">PRO</a>
   </span>
   <div class="links">
     <a class="sec" href="#oque">What it is</a>
@@ -117,7 +117,7 @@
     <a class="sec" href="#roadmap">Roadmap</a>
     <span class="lang"><a href="../">PT</a><a class="on" href="./">EN</a><a href="../es/">ES</a></span>
     <button class="tgl" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
-    <a class="btn" href="https://github.com/inematds/transformsite" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn" href="https://github.com/linnoff88-dev/transformsite" target="_blank" rel="noopener">GitHub</a>
   </div>
 </div></nav>
 
@@ -130,7 +130,7 @@
       <p class="lead">transformsite reads your entire site and knowledge base and puts a conversational agent on WhatsApp, Telegram, email or a widget in place of forms. It answers citing the source, says "I don't know" when it doesn't, and runs services such as scheduling, opening a ticket or sending data to the legacy system.</p>
       <div class="cta">
         <a class="btn" href="#guia">Start the guide</a>
-        <a class="btn ghost" href="https://github.com/inematds/transformsite" target="_blank" rel="noopener">View on GitHub</a>
+        <a class="btn ghost" href="https://github.com/linnoff88-dev/transformsite" target="_blank" rel="noopener">View on GitHub</a>
       </div>
     </div>
     <figure><img src="../assets/banner-en.jpg" alt="Banner: your site becomes chat — answers with sources, YAML services, WhatsApp and Telegram"></figure>
@@ -175,7 +175,7 @@
   <p class="sub">Python 3.11+ and an LLM. With a GPU, the default is a local model; without a GPU, use a smaller model or your subscription.</p>
   <div class="grid g3">
     <div class="card"><h3>Python + transformsite</h3><p>Installs the <code>transformsite</code> CLI.</p><pre><span class="c"># pipx (recommended)</span>
-<span class="k">pipx install</span> git+https://github.com/inematds/transformsite</pre></div>
+<span class="k">pipx install</span> git+https://github.com/linnoff88-dev/transformsite</pre></div>
     <div class="card"><h3>Ollama (LLM local)</h3><p>Chat model + <code>bge-m3</code> embeddings. Without a GPU: <code>qwen2.5:7b</code>.</p><pre><span class="k">ollama pull</span> qwen3.6:35b-a3b
 <span class="k">ollama pull</span> bge-m3</pre></div>
     <div class="card"><h3>Or: your subscription (experimental)</h3><p>In <code>transformsite.yaml</code>, use Claude Code or the Codex CLI already logged in, no API key.</p><pre><span class="c"># transformsite.yaml</span>
@@ -187,7 +187,7 @@ llm:
 <section id="guia"><div class="wrap">
   <span class="chip">User guide · step by step</span>
   <h2>From zero to a working bot in 7 steps</h2>
-  <p class="sub">Real commands, the same ones used in the pilot with the inema.club site.</p>
+  <p class="sub">Real commands, the same ones used in the pilot with the ARCKHÉ AI site.</p>
 
   <div class="step"><div class="b">1</div><div>
     <h3>Create the project</h3>
@@ -199,13 +199,13 @@ llm:
   <div class="step"><div class="b">2</div><div>
     <h3>Inventory the site (Phase 0)</h3>
     <p>Crawls the site and writes <code>inventario/paginas.csv</code> and <code>inventario/formularios.csv</code>, with forms sorted by priority (scheduling and contact first).</p>
-<pre><span class="k">transformsite inventory</span> --sitemap <span class="s">https://www.minhaempresa.com.br/sitemap.xml</span>   <span class="c"># inema.club: 387 pages</span></pre>
+<pre><span class="k">transformsite inventory</span> --sitemap <span class="s">https://www.minhaempresa.com.br/sitemap.xml</span>   <span class="c"># ARCKHÉ AI: 387 pages</span></pre>
   </div></div>
 
   <div class="step"><div class="b">3</div><div>
     <h3>Turn the site into a knowledge base (Phase 1)</h3>
     <p>Reads the entire site and the documents in <code>docs/</code> (md, pdf), splits them into chunks and computes local embeddings. Re-running only reprocesses pages that changed.</p>
-<pre><span class="k">transformsite ingest</span>        <span class="c"># inema.club: 386 pages → 1,512 chunks in 249 s</span>
+<pre><span class="k">transformsite ingest</span>        <span class="c"># ARCKHÉ AI: 386 pages → 1,512 chunks in 249 s</span>
 <span class="k">transformsite ask</span> <span class="s">"Preciso saber programar para fazer o curso CAIP?"</span></pre>
   </div></div>
 
@@ -245,17 +245,17 @@ action: {tool: agenda.criar_evento, idempotency_key: <span class="s">"{session_i
   <div class="step"><div class="b">7</div><div>
     <h3>Publish on a VPS</h3>
     <p>One command installs Docker and brings up app + Ollama + Evolution API (WhatsApp) + Caddy with automatic HTTPS.</p>
-<pre><span class="k">curl</span> -fsSL <span class="s">https://raw.githubusercontent.com/inematds/transformsite/main/deploy/vps/install.sh</span> | <span class="k">sudo bash</span> -s -- \
+<pre><span class="k">curl</span> -fsSL <span class="s">https://raw.githubusercontent.com/linnoff88-dev/transformsite/main/deploy/vps/install.sh</span> | <span class="k">sudo bash</span> -s -- \
   --domain <span class="s">bot.suaempresa.com.br</span> --site <span class="s">https://www.suaempresa.com.br</span> --whatsapp</pre>
   </div></div>
 </div></section>
 
 <section id="exemplos"><div class="wrap">
   <span class="chip">Examples</span>
-  <h2>Pilot: INEMA.CLUB</h2>
-  <p class="sub">The inema.club site (courses, guides, events and knowledge base) was the first to become chat. Result measured with 73 test questions and the local LLM: <strong>92.6%</strong> of answers with a valid source, <strong>100%</strong> "I don't know" on out-of-scope questions, <strong>100%</strong> of injection attempts blocked and p95 latency of <strong>2.6 s</strong>.</p>
+  <h2>Pilot: ARCKHÉ AI</h2>
+  <p class="sub">The ARCKHÉ AI site (courses, guides, events and knowledge base) was the first to become chat. Result measured with 73 test questions and the local LLM: <strong>92.6%</strong> of answers with a valid source, <strong>100%</strong> "I don't know" on out-of-scope questions, <strong>100%</strong> of injection attempts blocked and p95 latency of <strong>2.6 s</strong>.</p>
   <div class="ex">
-    <figure><img src="../assets/ex-chat.jpg" alt="Chat widget answering about an INEMA.CLUB course with the source link"><figcaption>Widget on the site: the answer comes with the page it used as its source.</figcaption></figure>
+    <figure><img src="../assets/ex-chat.jpg" alt="Chat widget answering about an ARCKHÉ AI course with the source link"><figcaption>Widget on the site: the answer comes with the page it used as its source.</figcaption></figure>
     <figure><img src="../assets/ex-painel.jpg" alt="transformsite admin dashboard on the metrics screen"><figcaption>/admin dashboard: metrics (resolution without a human, handoff, citation, latency), plus conversations, queue, services and knowledge base.</figcaption></figure>
   </div>
 </div></section>
@@ -274,8 +274,8 @@ action: {tool: agenda.criar_evento, idempotency_key: <span class="s">"{session_i
   <div class="wrap">
     <div class="pill">Python · FastAPI</div><div class="pill">Ollama · bge-m3</div><div class="pill">SQLite FTS5 + vetores</div><div class="pill">Docker · Caddy</div>
     <p style="margin-top:18px">transformsite · open framework (MIT) ·
-      <a href="https://github.com/inematds/transformsite">github.com/inematds/transformsite</a> ·
-      <a href="https://inema.club">INEMA.CLUB</a></p>
+      <a href="https://github.com/linnoff88-dev/transformsite">github.com/linnoff88-dev/transformsite</a> ·
+      <a href="https://ARCKHÉ AI">ARCKHÉ AI</a></p>
   </div>
 </footer>
 

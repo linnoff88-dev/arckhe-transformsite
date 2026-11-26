@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Instalaçêo numa VPS Ubuntu/Debian limpa (rodar como root ou com sudo).
-#   curl -fsSL https://raw.githubusercontent.com/inematds/transformsite/main/deploy/vps/install.sh | bash -s -- \
+#   curl -fsSL https://raw.githubusercontent.com/linnoff88-dev/transformsite/main/deploy/vps/install.sh | bash -s -- \
 #        --domain bot.suaempresa.com.br --site https://www.suaempresa.com.br --org "Sua Empresa" --contact atendimento@suaempresa.com.br
 set -euo pipefail
 
@@ -21,7 +21,7 @@ done
 command -v docker >/dev/null || curl -fsSL https://get.docker.com | sh
 apt-get update -qq && apt-get install -y -qq git python3-venv >/dev/null
 
-[ -d "$DIR" ] || git clone --depth 1 https://github.com/inematds/transformsite.git "$DIR"
+[ -d "$DIR" ] || git clone --depth 1 https://github.com/linnoff88-dev/transformsite.git "$DIR"
 cd "$DIR/deploy/vps"
 
 # projeto do bot (configuraçêo + serviços) usando o próprio CLI dentro de um venv

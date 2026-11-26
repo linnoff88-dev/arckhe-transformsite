@@ -18,7 +18,7 @@ Uma VPS Linux (Ubuntu 22.04+/Debian 12) com **4 vCPU / 8 GB RAM** roda o bot com
 2. Rode:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/inematds/transformsite/main/deploy/vps/install.sh | sudo bash -s -- \
+curl -fsSL https://raw.githubusercontent.com/linnoff88-dev/transformsite/main/deploy/vps/install.sh | sudo bash -s -- \
   --domain bot.suaempresa.com.br --site https://www.suaempresa.com.br \
   --org "Sua Empresa" --contact atendimento@suaempresa.com.br --whatsapp
 ```
@@ -29,7 +29,7 @@ gera senhas aleatórias no `.env`, sobe os containers, baixa os modelos e roda o
 ## Manual
 
 ```bash
-git clone https://github.com/inematds/transformsite /opt/transformsite && cd /opt/transformsite/deploy/vps
+git clone https://github.com/linnoff88-dev/transformsite /opt/transformsite && cd /opt/transformsite/deploy/vps
 cp .env.example .env && nano .env                 # domínio, tokens, modelo
 pipx install /opt/transformsite && transformsite init projeto --org "..." --url https://... --contact ...
 docker compose --profile whatsapp up -d --build   # sem WhatsApp: docker compose up -d --build
